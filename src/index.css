@@ -8,38 +8,30 @@ html {
 
 @layer base {
   :root {
-      --main-color-background: 241, 245, 249;
-      --main-color: 60, 80, 224;
+      --main-color-background: 246, 246, 248;
+      --main-color: 19, 102, 255;
+      --main-color-hover: 55, 123, 246;
       --section-color: 255, 255, 255;
-      --section-color-hover: 247, 249, 252;
+      --section-color-focus: 249, 249, 251;
+      --section-color-hover: 242, 242, 242;
       --color-text-1: 27, 35, 56;
-      --color-text-2: 93, 114, 143;
-      /* --color-text-hover: ; */
+      --color-text-2: 155, 156, 160;
       --color-border: 226, 232, 240;
-      --main-navber-background: 28, 36, 52;
-      --main-navber-hover: 36, 48, 63;
-
-      --color-text-1-navber: 221, 228, 238;
-      --color-text-2-navber: 138, 153, 175;
   }
 }
 
 :root {
-  --main-color-background-css: rgb(241, 245, 249);
-  --main-color-css: rgb(60, 80, 224);
+  --main-color-background-css: rgb(246, 246, 248);
+  --main-color-css: rgb(19, 102, 255);
+  --main-color-hover-css: rgb(55, 123, 246);
   --section-color-css: rgb(255, 255, 255);
-  --section-color-hover-css: rgb(247, 249, 252);
+  --section-color-focus-css: rgb(249, 249, 251);
+  --section-color-hover-css: rgb(242, 242, 242);
   --color-text-1-css: rgb(27, 35, 56);
-  --color-text-2-css: rgb(93, 114, 143);
-  --color-text-hover-css: ;
+  --color-text-2-css: rgb(155, 156, 160);
   --color-border-css: rgb(226, 232, 240);
-  --main-navber-background-css: rgb(28, 36, 52);
-  --main-navber-hover-css: rgb(36, 48, 63);
-  
-  --color-text-1-navber-css: rgb(221, 228, 238);
-  --color-text-2-navber-css: rgb(138, 153, 175);
 }
 
 body {
-  /* background: var(--main-color-background-css); */
+  background: var(--main-color-background-css);
 }
