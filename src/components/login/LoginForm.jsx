@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -84,12 +84,15 @@ const LoginForm = () => {
                     </div>
                 </div>
                 <div className="btn">
+                    <Link to="/products">
                     <button
                         type="submit"
                         className="bg-[#0f1626] text-white w-full p-2 rounded-md"
                     >
                         Login
                     </button>
+                    </Link>
+                    
                 </div>
             </div>
         </form>
