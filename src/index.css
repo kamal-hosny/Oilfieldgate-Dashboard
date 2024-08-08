@@ -35,3 +35,13 @@ html {
 body {
   background: var(--main-color-background-css);
 }
+
+.modal-show{
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-hide{
+  opacity: 0;
+  visibility: hidden;
+}

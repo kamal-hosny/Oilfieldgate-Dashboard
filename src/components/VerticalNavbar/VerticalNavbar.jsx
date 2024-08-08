@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
-import { AllStateContext } from "../context/AllStateContext";
+import { AllStateContext } from "../../context/AllStateContext";
 
-import logo from "../assets/logo/vertical_on_transparent_by_logaster.svg";
+import logo from "../../assets/logo/vertical_on_transparent_by_logaster.svg"
 
 import { NavLink } from "react-router-dom";
 
@@ -9,6 +9,9 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../store/modal/modalSlice";
+
 
 const menuItems = [
     {
@@ -29,6 +32,7 @@ const menuItems = [
 ];
 
 const VerticalNavbar = () => {
+    const dispatch = useDispatch();
     const { mobileSize, openMenu, changeMenuValue } = useContext(AllStateContext);
 
     const renderedMenuItems = useMemo(() => {
@@ -79,7 +83,7 @@ const VerticalNavbar = () => {
                             className={`${
                                 openMenu ? "justify-center w-12" : "w-full" 
                             } cursor-pointer flex items-center h-12  gap-2 p-3 transition-all whitespace-nowrap text-colorText2 sm:text-base text-xs rounded-lg my-1 hover:bg-colorBorder`}
-                        >
+                         onClick={()=>{dispatch(openModal("LogOut"))}}>
                             <LogoutIcon fontSize="small" />
                             {!openMenu && <span>Log Out</span>}
                         </div>
