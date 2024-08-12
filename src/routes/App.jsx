@@ -36,10 +36,6 @@ function App() {
         {
           path: 'checking-orders',
           element: <CheckingOrders />
-        },
-        {
-          path: 'notification',
-          element: <Notification />
         }
       ]
     }

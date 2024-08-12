@@ -1,10 +1,9 @@
 import React, { useContext, useMemo } from "react";
 import AccountBar from "./AccountBar";
-import NotificationBar from "./NotificationBar";
 import { AllStateContext } from "../../context/AllStateContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import AccountNav from "./AccountNav";
+
 
 const HorizontalNavbar = () => {
     
@@ -24,7 +23,6 @@ const HorizontalNavbar = () => {
                 </div>
             </div>
             <div className="flex items-center gap-2">
-                {/* <NotificationBar /> */}
                     <AccountBar />
             </div>
         </div>

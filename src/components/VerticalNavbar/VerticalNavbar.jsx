@@ -24,11 +24,6 @@ const menuItems = [
         icon: <GroupsIcon fontSize="small" />,
         path: "/checking-orders",
     },
-    {
-        title: "Notification",
-        icon: <NotificationsIcon fontSize="small" />,
-        path: "/notification",
-    },
 ];
 
 const VerticalNavbar = () => {
