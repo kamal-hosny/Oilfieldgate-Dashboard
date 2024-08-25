@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../store/modal/modalSlice";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 const menuItems = [
@@ -36,8 +37,10 @@ const VerticalNavbar = () => {
                 <NavLink
                     to={item.path}
                     className={({ isActive }) =>
-                        `${openMenu ? "p-[15px] w-12" : "w-full"} flex items-center h-12 whitespace-nowrap  gap-2 p-3 transition-all text-colorText2 rounded-lg my-1 sm:text-base text-xs ${
-                            isActive ? "bg-mainColor text-sectionColor hover:bg-mainColorHover " : "hover:bg-sectionColor"
+                        `${openMenu ? "p-[15px] w-12" : "w-full"
+                        } flex items-center h-12 whitespace-nowrap  gap-2 p-3 transition-all relative text-colorText2 rounded-lg my-1 sm:text-base text-xs ${isActive
+                            ? "bg-mainColor text-sectionColor hover:bg-mainColorHover text-white"
+                            : "hover:bg-sectionColor"
                         }`
                     }
                 >
@@ -50,10 +53,23 @@ const VerticalNavbar = () => {
 
     return (
         <header
-            className={`${
-                openMenu ? "w-[89px]" : "w-[300px]"
-            } overflow-hidden transition-all p-5 relative v-nav flex-col border-r-2 h-screen border-colorBorder gap-10 bg-sectionColor`}
+            className={`${mobileSize
+                ? `${openMenu ? "-left-[300px] fixed  " : "  left-0 fixed "
+                } fixed w-[250px]  h-full top-0 z-20 `
+                : openMenu
+                    ? "w-[89px] "
+                    : "w-[300px] "
+                }  transition-all duration-300 p-5 ${mobileSize ? "fixed " : "relative"
+                }  v-nav flex-col h-screen  gap-10 bg-sectionColor`}
         >
+
+<span
+    className={`${mobileSize
+        ? `${openMenu ? "" : ""}`
+        : `${openMenu ? "w-[89px]" : "w-[280px] left-0"} h-full`} 
+    bg-sectionColor  fixed top-0 left-0 -z-10 transition-all duration-300`}
+></span>
+
             {/* Logo */}
             <div className={` gap-2 logo flex items-center`}>
                 <div className="flex items-center justify-center">
@@ -85,6 +101,18 @@ const VerticalNavbar = () => {
                     </div>
                 </ul>
             </nav>
+            {mobileSize && (
+                <button
+                    onClick={() => changeMenuValue(!openMenu)}
+                    className="absolute top-4 right-4 text-white  p-2 rounded"
+                >
+                    {!openMenu && (
+                        <div className="bg-sectionColorFocus hover:bg-sectionColorHover transition text-colorText1 p-3 rounded-lg relative cursor-pointer">
+                            <CloseIcon />
+                        </div>
+                    )}
+                </button>
+            )}
         </header>
     );
 };

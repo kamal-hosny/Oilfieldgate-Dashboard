@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+
 const CreateProducts = () => {
   const {
     register,
@@ -120,6 +121,10 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
+
+
+
+
             {/* Condition */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Condition:</label>
@@ -132,31 +137,125 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
+            {/* Brand  */}
+
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">Brand:</label>
+              <select
+                name="brand"
+                id="brand"
+                {...register("brand", { required: true })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              >
+                <option value="">Select a brand</option>
+                <option value="brand1">brand 1</option>
+                <option value="brand2">brand 2</option>
+                <option value="brand3">brand 3</option>
+              </select>
+              {errors.brand && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+
+
+            {/* Weight  */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">Weight :</label>
+              <input
+                type="text"
+                {...register("Weight ", { required: true })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.Weight && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            {/* size    */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">Size   :</label>
+              <input
+                type="text"
+                {...register("size  ", { required: true })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.size && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            {/* HNS Code    */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">HNS Code   :</label>
+              <input
+                type="text"
+                {...register("HNSCode  ", { required: true })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.HNSCode && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+
+
+
+
             {/* Categories */}
             <div className="flex flex-col gap-1 col-span-6">
               <label className="text-colorText1">Categories:</label>
-              <input
-                type="text"
+              <select
+                name="categories"
+                id="categories"
                 {...register("categories", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
+              >
+                <option value="">Select a category</option>
+                <option value="category1">Category 1</option>
+                <option value="category2">Category 2</option>
+                <option value="category3">Category 3</option>
+              </select>
               {errors.categories && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
+
+
             {/* Supply Availability */}
             <div className="flex flex-col gap-1 col-span-6">
-              <label className="text-colorText1">Supply Availability:</label>
+              <label className="text-colorText1">instock:</label>
               <input
                 type="number"
-                {...register("supplyAvailability", { required: true })}
+                {...register("instock", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
               />
-              {errors.supplyAvailability && (
+              {errors.instock && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+            {/* Description  */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">Description :</label>
+              <textarea name="" id=""
+                {...register("description", { required: true })}
+                className="border-colorBorder h-48 border-2 p-2 w-full focus:outline-mainColorHover"
+              >
+              </textarea>
+              {errors.description && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            {/* Document  */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">Add document :</label>
+              <input {...register("document", { required: true })} type="file" name="" id="" className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.document && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
           </div>
+
           <div className="flex-1 flex flex-col gap-4 w-full">
             <label
               htmlFor="file"
@@ -200,6 +299,7 @@ const CreateProducts = () => {
             </div>
           </div>
         </div>
+
         <div className="flex justify-end gap-4 items-center">
           <button className="bg-gray-600 text-white p-2 rounded-md">Cancel</button>
           <button type="submit" className="bg-mainColor text-white p-2 rounded-md">
