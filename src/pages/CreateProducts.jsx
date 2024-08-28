@@ -85,15 +85,15 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-            {/* Material Reference Number */}
+            {/* Model Number */}
             <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Material Ref No:</label>
+              <label className="text-colorText1">Model Number:</label>
               <input
                 type="text"
-                {...register("materialRefNo", { required: true })}
+                {...register("modelNumber", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
               />
-              {errors.materialRefNo && (
+              {errors.modelNumber && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
@@ -128,11 +128,17 @@ const CreateProducts = () => {
             {/* Condition */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Condition:</label>
-              <input
-                type="text"
+              <select
+                name="condition"
+                id="condition"
                 {...register("condition", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
+              >
+                <option value="">Select a condition</option>
+                <option value="condition1">New</option>
+                <option value="condition1">Used</option>
+
+              </select>
               {errors.condition && (
                 <span className="text-red-500">This field is required</span>
               )}
@@ -200,13 +206,13 @@ const CreateProducts = () => {
 
 
 
-            {/* Categories */}
+            {/* Material Category */}
             <div className="flex flex-col gap-1 col-span-6">
-              <label className="text-colorText1">Categories:</label>
+              <label className="text-colorText1">Material Category:</label>
               <select
-                name="categories"
-                id="categories"
-                {...register("categories", { required: true })}
+                name="materialCategory"
+                id="materialCategory"
+                {...register("materialCategory", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
               >
                 <option value="">Select a category</option>
@@ -214,7 +220,7 @@ const CreateProducts = () => {
                 <option value="category2">Category 2</option>
                 <option value="category3">Category 3</option>
               </select>
-              {errors.categories && (
+              {errors.materialCategory && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>

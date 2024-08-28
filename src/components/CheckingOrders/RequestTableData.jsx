@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Typography } from "@material-tailwind/react";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 // Define table headers
 const TABLE_HEAD = [
   "RFQ #", "RFQ Date", "Customer", "Status", 
@@ -69,7 +70,7 @@ const RequestTableData = () => {
                 color="blue-gray"
                 className="font-medium"
               >
-                Edit
+                <DeleteIcon/>
               </Typography>
               <Typography
                 as="a"
@@ -78,7 +79,7 @@ const RequestTableData = () => {
                 color="blue-gray"
                 className="font-medium"
               >
-                Delete
+                <EditIcon />
               </Typography>
             </td>
           </tr>

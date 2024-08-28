@@ -37,7 +37,7 @@ const AccountBar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-16 w-44 sm:w-full right-0 accountNavC"
+                    className="absolute z-10 top-16 w-44 sm:w-full right-0 accountNavC"
                 >
                     <AccountNav />
                 </motion.div>

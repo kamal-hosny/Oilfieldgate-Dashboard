@@ -1,6 +1,22 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { closeModal } from '../../store/modal/modalSlice';
 
 const LogOut = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const confirmLog = () => {
+        dispatch(closeModal());
+        navigate("./login", { replace: true })
+    }
+
+    const cancel = () => {
+        dispatch(closeModal())
+    }
+
+
   return (
     <div
     className={`fixed flex flex-col border-colorBorder top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[6] justify-center items-center rounded-lg w-96 bg-sectionColor border-2 `}
@@ -16,10 +32,10 @@ const LogOut = () => {
             {/* S btn */}
             <div className="col-span-2 flex justify-between gap-2 mt-2 items-center">
                 <div className="flex items-center gap-2">
-                    <button className="bg-green-500 text-white px-3 py-2 rounded-sm">
+                    <button className="bg-green-500 text-white px-3 py-2 rounded-sm" onClick={confirmLog}>
                         Submit
                     </button>
-                    <button className="bg-gray-500 text-white px-3 py-2 rounded-sm">
+                    <button onClick={cancel} className="bg-gray-500 text-white px-3 py-2 rounded-sm">
                         Cancel
                     </button>
                 </div>

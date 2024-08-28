@@ -11,9 +11,6 @@ const InformationAbouTheRequest = () => {
       <div className=" InformationAbouTheRequest flex flex-col gap-4
       overflow-x-auto
       ">
-        {/* <div  className='w-full '>
-        <CustomerData />
-        </div> */}
         <DataTime />
         <div className="flex items-start gap-4 flex-col">
           <StepperWithContent />
