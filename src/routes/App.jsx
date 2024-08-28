@@ -6,7 +6,6 @@ import ErrorPage from '../pages/ErrorPage'
 import Products from '../pages/Products'
 import Layout from '../Layout/Layout'
 import CheckingOrders from '../pages/CheckingOrders'
-import Notification from '../pages/Notification'
 import { AllStateProvider } from '../context/AllStateContext'
 import CreateProducts from '../pages/CreateProducts'
 

@@ -4,6 +4,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import InformationAbouTheRequest from '../components/CheckingOrders/InformationAbouTheRequest';
 import CustomerData from '../components/CheckingOrders/CustomerData';
+import InformationHeader from '../components/CheckingOrders/InformationHeader';
 
 const data = [
   {
@@ -108,17 +109,23 @@ const getStatusColor = (status) => {
 const CheckingOrders = () => {
   return (
     <div className="flex gap-2">
+      
       <div className="orders flex-1 bg-sectionColor py-2 px-2">
         <div className="cards flex flex-col gap-2 overflow-y-auto h-screen">
           {data.map((user) => (
             <div
               key={user.id}
-              className="card flex items-center p-2 gap-2 h-14 bg-sectionColorFocus hover:bg-sectionColorHover cursor-pointer border border-colorBorder"
+              className="card flex items-center p-2 gap-2 h-28 bg-sectionColorFocus hover:bg-sectionColorHover cursor-pointer border border-colorBorder"
             >
               <Avatar size='35px' name={user.name} round={true} textSizeRatio={2} />
-              <div className="info text-sm relative w-full">
-                <div className="name font-semibold text-colorText1">
+              <div className="info text-xs relative w-full">
+                <div className="name flex flex-col">
+                  <span className='font-semibold text-colorText1'>
                   {user.name}
+                  </span>
+                  <span className='text-colorText2'>
+                    co campany
+                  </span>
                 </div>
                 <div className="time text-colorText2 absolute right-0 text-xs">
                   {user.time}
@@ -140,7 +147,12 @@ const CheckingOrders = () => {
           ))}
         </div>
       </div>
-      <InformationAbouTheRequest />
+      <div className='details flex-[1] md:flex-[4] ld:flex-[1] sm:flex-[2] overflow-x-auto'>
+          <InformationHeader />
+          <div className='p-4  bg-sectionColor h-full'>
+          <InformationAbouTheRequest />
+          </div>
+      </div>
     </div>
   );
 };

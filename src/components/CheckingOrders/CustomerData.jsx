@@ -11,7 +11,7 @@ const CustomerData = () => {
   };
 
   return (
-    <div className="flex ">
+    <div className="flex">
       <div className="w-full max-w-md">
         <div className="overflow-hidden border border-gray-300 rounded-sm">
           <table className="min-w-full divide-y divide-gray-300">

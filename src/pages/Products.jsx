@@ -5,6 +5,7 @@ import DataTable from '../components/products/DataTable'
 const Products = () => {
   return (
     <div className='flex flex-col gap-4 '>
+      
       <div className="title text-lg font-semibold text-colorText1">
       Products
       </div>
