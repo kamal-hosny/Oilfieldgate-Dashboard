@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AccountNav from "./AccountNav";
+import Avatar from "react-avatar";
 
 const AccountBar = () => {
     const [statusAccountNav, setStatusAccountNav] = useState(false);
@@ -12,12 +13,13 @@ const AccountBar = () => {
                 className="flex items-center gap-2 bg-sectionColorFocus hover:bg-sectionColorHover transition p-1 rounded-lg cursor-pointer"
                 onClick={() => setStatusAccountNav(!statusAccountNav)}
             >
-                <div className="image flex-shrink-0">
-                    <img
+                <div className="image flex-shrink-0 overflow-hidden rounded-lg">
+                <Avatar size='35px' name="F" round={false} textSizeRatio={2} />
+                    {/* <img
                         className="w-10 h-10 rounded-lg shadow-md"
                         src="https://i.pinimg.com/474x/62/c4/e2/62c4e2cddb7184c7d11b33f3598c73ce.jpg"
                         alt="icon"
-                    />
+                    /> */}
                 </div>
                 <div>
                     <div className="info w-[90px] hidden sm:block">

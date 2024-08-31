@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { openModal } from '../../store/modal/modalSlice';
+import { useDispatch } from 'react-redux';
 
 const initialProductData = [
   {
@@ -118,6 +120,7 @@ const initialProductData = [
 ];
 
 const DataTable = () => {
+  const dispatch = useDispatch();
   const [productData, setProductData] = useState(initialProductData);
 
   return (
@@ -210,7 +213,7 @@ const DataTable = () => {
                       <button className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-500 mr-2">
                         Edit
                       </button>
-                      <button className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-500">
+                      <button onClick={() => {dispatch(openModal("DeleteProduct"))}} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-500">
                         Delete
                       </button>
                     </td>

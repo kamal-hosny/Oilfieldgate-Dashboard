@@ -8,6 +8,7 @@ import Layout from '../Layout/Layout'
 import CheckingOrders from '../pages/CheckingOrders'
 import { AllStateProvider } from '../context/AllStateContext'
 import CreateProducts from '../pages/CreateProducts'
+import EditProducts from '../pages/EditProducts'
 
 function App() {
   const Routing = createBrowserRouter([
@@ -31,6 +32,10 @@ function App() {
         {
           path: 'products/create',
           element: <CreateProducts />,
+        },
+        {
+          path: 'products/edit',
+          element: (<EditProducts />),
         },
         {
           path: 'checking-orders',

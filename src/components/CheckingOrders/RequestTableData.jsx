@@ -40,7 +40,7 @@ const RequestTableData = () => {
                 <Typography
                   variant="small"
                   color="blue-gray"
-                  className="font-normal leading-none opacity-70"
+                  className="font-medium leading-none opacity-70 w-20"
                 >
                   {head}
                 </Typography>
@@ -48,7 +48,7 @@ const RequestTableData = () => {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className='!text-sm'>
           <tr>
             <td className="p-4 border-b border-blue-gray-50">{TABLE_ROW.rfq}</td>
             <td className="p-4 border-b border-blue-gray-50">{TABLE_ROW.date}</td>
@@ -62,26 +62,6 @@ const RequestTableData = () => {
             <td className="p-4 border-b border-blue-gray-50">{TABLE_ROW.shippingStatus}</td>
             <td className="p-4 border-b border-blue-gray-50">{TABLE_ROW.dn}</td>
             <td className="p-4 border-b border-blue-gray-50">{TABLE_ROW.comments}</td>
-            <td className="p-4 border-b border-blue-gray-50 flex gap-4">
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                color="blue-gray"
-                className="font-medium"
-              >
-                <DeleteIcon/>
-              </Typography>
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                color="blue-gray"
-                className="font-medium"
-              >
-                <EditIcon />
-              </Typography>
-            </td>
           </tr>
         </tbody>
       </table>

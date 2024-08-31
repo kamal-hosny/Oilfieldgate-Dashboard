@@ -5,6 +5,8 @@ import Login from '../components/modalDialog/Login';
 import LogOut from '../components/modalDialog/LogOut';
 import Modal from '../Layout/modal/Modal';
 import UserDetails from '../components/modalDialog/UserDetails';
+import DeleteProduct from '../components/modalDialog/DeleteProduct';
+import DeleteRequest from '../components/modalDialog/DeleteRequest';
 
 const ModalManager = () => {
     const dispatch = useDispatch();
@@ -12,7 +14,7 @@ const ModalManager = () => {
 
     const closeModalHandler = () => dispatch(closeModal());
 
-    const componentsLookup = { Login, LogOut, UserDetails };
+    const componentsLookup = { Login, LogOut, UserDetails, DeleteProduct, DeleteRequest };
     let renderComponent;
 
     if (componentName) {

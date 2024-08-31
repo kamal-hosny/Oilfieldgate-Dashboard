@@ -5,6 +5,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import InformationAbouTheRequest from '../components/CheckingOrders/InformationAbouTheRequest';
 import CustomerData from '../components/CheckingOrders/CustomerData';
 import InformationHeader from '../components/CheckingOrders/InformationHeader';
+import SearchCustomer from '../components/CheckingOrders/SearchCustomer';
 
 const data = [
   {
@@ -108,9 +109,10 @@ const getStatusColor = (status) => {
 
 const CheckingOrders = () => {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 ">
       
       <div className="orders flex-1 bg-sectionColor py-2 px-2">
+        <SearchCustomer />
         <div className="cards flex flex-col gap-2 overflow-y-auto h-screen">
           {data.map((user) => (
             <div
@@ -147,7 +149,7 @@ const CheckingOrders = () => {
           ))}
         </div>
       </div>
-      <div className='details flex-[1] md:flex-[4] ld:flex-[1] sm:flex-[2] overflow-x-auto'>
+      <div className='details w-72 flex-[1] md:flex-[4] ld:flex-[1] sm:flex-[2] overflow-x-auto'>
           <InformationHeader />
           <div className='p-4  bg-sectionColor h-full'>
           <InformationAbouTheRequest />

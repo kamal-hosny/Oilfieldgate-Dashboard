@@ -35,6 +35,7 @@ const VerticalNavbar = () => {
         return menuItems.map((item, index) => (
             <li key={index}>
                 <NavLink
+                onClick={()=>{openMenu === false && changeMenuValue(true)}}
                     to={item.path}
                     className={({ isActive }) =>
                         `${openMenu ? "p-[15px] w-12" : "w-full"
@@ -94,7 +95,7 @@ const VerticalNavbar = () => {
                             className={`${
                                 openMenu ? "justify-center w-12" : "w-full" 
                             } cursor-pointer flex items-center h-12  gap-2 p-3 transition-all whitespace-nowrap text-colorText2 sm:text-base text-xs rounded-lg my-1 hover:bg-colorBorder`}
-                         onClick={()=>{dispatch(openModal("LogOut"))}}>
+                         onClick={()=>{dispatch(openModal("LogOut")); }}>
                             <LogoutIcon fontSize="small" />
                             {!openMenu && <span>Log Out</span>}
                         </div>

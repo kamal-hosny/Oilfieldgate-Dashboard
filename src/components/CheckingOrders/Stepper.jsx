@@ -17,9 +17,9 @@ export function StepperWithContent() {
       case 1:
         return '#3b82f6'; // sent
       case 2:
-        return '#22c55e'; // approved
-      case 3:
         return '#eab308'; // on-hold
+      case 3:
+        return '#22c55e'; // approved
       case 4:
         return '#ef4444'; // rejected
       default:
@@ -47,8 +47,8 @@ export function StepperWithContent() {
   const steps = [
     { label: 'quoted', icon: DocumentTextIcon },
     { label: 'sent', icon: PaperAirplaneIcon },
-    { label: 'approved', icon: CheckCircleIcon },
     { label: 'on-hold', icon: PauseCircleIcon },
+    { label: 'approved', icon: CheckCircleIcon },
     { label: 'rejected', icon: XCircleIcon },
   ];
 
@@ -59,7 +59,7 @@ export function StepperWithContent() {
         <span
           className={`absolute transition-all h-1 ${getStatusWidth(
             activeStep
-          )} z-[5] flex top-1/4 -translate-y-1/2`}
+          )}  flex top-1/4 -translate-y-1/2`}
           style={{ backgroundColor: getStatusColor(activeStep) }}
         ></span>
         {steps.map((step, index) => {
@@ -67,8 +67,7 @@ export function StepperWithContent() {
           return (
             <div
               key={index}
-              className="flex flex-col items-center cursor-pointer gap-2 w-[70px] h-[70px] relative z-10"
-              onClick={() => setActiveStep(index)}
+              className="flex flex-col items-center gap-2 w-[70px] h-[70px] relative z-100"
             >
               <div
                 className="p-2 rounded-full"
