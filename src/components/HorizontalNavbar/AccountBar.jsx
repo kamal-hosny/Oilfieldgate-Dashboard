@@ -14,7 +14,7 @@ const AccountBar = () => {
                 onClick={() => setStatusAccountNav(!statusAccountNav)}
             >
                 <div className="image flex-shrink-0 overflow-hidden rounded-lg">
-                <Avatar size='35px' name="F" round={false} textSizeRatio={2} />
+                <Avatar size='35px' name="k" round={false} textSizeRatio={2} />
                     {/* <img
                         className="w-10 h-10 rounded-lg shadow-md"
                         src="https://i.pinimg.com/474x/62/c4/e2/62c4e2cddb7184c7d11b33f3598c73ce.jpg"

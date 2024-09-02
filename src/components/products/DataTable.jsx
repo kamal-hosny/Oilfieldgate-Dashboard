@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { openModal } from '../../store/modal/modalSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const initialProductData = [
   {
@@ -120,6 +121,7 @@ const initialProductData = [
 ];
 
 const DataTable = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [productData, setProductData] = useState(initialProductData);
 
@@ -210,7 +212,7 @@ const DataTable = () => {
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-500 mr-2">
+                      <button onClick={()=>{navigate("/products/edit")}} className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-500 mr-2">
                         Edit
                       </button>
                       <button onClick={() => {dispatch(openModal("DeleteProduct"))}} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-500">
