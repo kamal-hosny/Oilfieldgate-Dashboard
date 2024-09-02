@@ -42,7 +42,7 @@ const EditProducts = () => {
 
   return (
     <div>
-      <h2>Create Product</h2>
+      <h2>Edit Product</h2>
       <form
         className="py-4 flex flex-col gap-4"
         onSubmit={handleSubmit(onSubmit)}
