@@ -3,9 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAuth } from "../../store/login/act/actPostLoginAuth";
+import { toast } from 'react-toastify';
+
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { records, loading, error } = useSelector((state) => state.loginAuth);
     const [showPassword, setShowPassword] = useState(false);
 
     const {
@@ -14,9 +20,28 @@ const LoginForm = () => {
         formState: { errors },
     } = useForm();
 
+
+
+
     const onSubmit = (data) => {
         console.log("data", data);
+        dispatch(loginAuth({
+            "Email": data.email,
+            "password": data.password
+        }))
+        .unwrap()
+        .then(() => {
+            console.log("susses");
+            navigate("/products");
+            toast.success("Login successful!");
+        })
+        .catch((error) => {
+            console.log(error + "error");
+            toast.error(error?.response?.data?.message || "Login failed, please check your credentials and try again.");
+        });
     };
+
+
 
     return (
         <form
@@ -84,14 +109,12 @@ const LoginForm = () => {
                     </div>
                 </div>
                 <div className="btn">
-                    <Link to="/products">
                     <button
                         type="submit"
                         className="bg-[#0f1626] text-white w-full p-2 rounded-md"
                     >
                         Login
                     </button>
-                    </Link>
                     
                 </div>
             </div>

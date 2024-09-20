@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import { AllStateContext } from "../../context/AllStateContext";
-
-import logo from "../../assets/logo/vertical_on_transparent_by_logaster.svg"
+import TuneIcon from '@mui/icons-material/Tune';
+import logo from "../../assets/logo/facebook_profile_image_on_corporate_by_logaster.png"
 
 import { NavLink } from "react-router-dom";
 
@@ -25,12 +25,16 @@ const menuItems = [
         icon: <GroupsIcon fontSize="small" />,
         path: "/checking-orders",
     },
+    {
+        title: "Create Specific",
+        icon: <TuneIcon fontSize="small" />,
+        path: "/create-specific",
+    }
 ];
 
 const VerticalNavbar = () => {
     const dispatch = useDispatch();
     const { mobileSize, openMenu, changeMenuValue } = useContext(AllStateContext);
-
     const renderedMenuItems = useMemo(() => {
         return menuItems.map((item, index) => (
             <li key={index}>

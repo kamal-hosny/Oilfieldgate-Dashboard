@@ -8,64 +8,47 @@ import {
 import TuneIcon from "@mui/icons-material/Tune";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
+import Select from "react-select";
 
 export function DrawerDefault() {
   const [open, setOpen] = useState(false);
-  const [materialValue, setMaterialValue] = useState("");
-  const [categoryValue, setCategoryValue] = useState("");
-  const [dimensionValue, setDimensionValue] = useState("");
-  const [brandValue, setBrandValue] = useState("");
-  const [conditionValue, setConditionValue] = useState("");
-  const [modelNumberValue, setModelNumberValue] = useState("");
+  const [categoryMaterialValue, setCategoryMaterialValue] = useState(null); // تعديل الاسم هنا
+  const [categoryValue, setCategoryValue] = useState(null);
+  const [brandValue, setBrandValue] = useState(null);
+  const [conditionValue, setConditionValue] = useState(null);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
-  // Example mock data
   const mockMaterialData = [
-    { attributes: { name: "Wood" } },
-    { attributes: { name: "Metal" } },
-    { attributes: { name: "Plastic" } },
+    { label: "Metal", value: "Metal" },
   ];
 
   const mockCategoryData = [
-    { attributes: { name: "Electronics" } },
-    { attributes: { name: "Furniture" } },
-  ];
-
-  const mockDimensionData = [
-    { attributes: { name: "Small" } },
-    { attributes: { name: "Medium" } },
-    { attributes: { name: "Large" } },
+    { label: "Electronics", value: "Electronics" },
+    { label: "Furniture", value: "Furniture" },
   ];
 
   const mockBrandData = [
-    { attributes: { name: "Brand A" } },
-    { attributes: { name: "Brand B" } },
+    { label: "Brand A", value: "Brand A" },
+    { label: "Brand B", value: "Brand B" },
   ];
 
   const mockConditionData = [
-    { attributes: { name: "New" } },
-    { attributes: { name: "Used" } },
+    { label: "New", value: "New" },
+    { label: "Used", value: "Used" },
   ];
 
-  const mockModelNumberData = [
-    { attributes: { name: "Model 001" } },
-    { attributes: { name: "Model 002" } },
-  ];
-
-  const valueMaterial = useSelector((state) => state?.allMaterials?.records?.data) || mockMaterialData;
-  const valueCategory = useSelector((state) => state?.allCategories?.records?.data) || mockCategoryData;
-  const valueDimension = useSelector((state) => state?.allDimensions?.records?.data) || mockDimensionData;
-  const valueBrand = useSelector((state) => state?.allBrands?.records?.data) || mockBrandData;
-  const valueCondition = useSelector((state) => state?.allConditions?.records?.data) || mockConditionData;
-  const valueModelNumber = useSelector((state) => state?.allModelNumbers?.records?.data) || mockModelNumberData;
+  const valueMaterialCategory = useSelector((state) => state?.allMaterialCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockMaterialData; // تعديل المتغير هنا
+  const valueCategory = useSelector((state) => state?.allCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockCategoryData;
+  const valueBrand = useSelector((state) => state?.allBrands?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockBrandData;
+  const valueCondition = useSelector((state) => state?.allConditions?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockConditionData;
 
   return (
     <React.Fragment>
-       <Helmet>
+      <Helmet>
         <style type="text/css">{`
-        ${openDrawer && 'overflow: hidden;'}
+        ${openDrawer === true && 'overflow: hidden;'}
         `}</style>
       </Helmet>
       <Button onClick={openDrawer} className="rounded-e-full p-2 h-[42px]">
@@ -96,92 +79,49 @@ export function DrawerDefault() {
 
         <div className="flex flex-col gap-8">
           <div className="w-full flex flex-col gap-2">
-            <label className="text-colorText1">Select Material</label>
-            <select
-              className="border-colorBorder border-2 p-2 w-full cursor-pointer focus:outline-mainColorHover"
-              value={materialValue}
-              onChange={(e) => setMaterialValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueMaterial?.map((x, index) => (
-                <option className="cursor-pointer" key={index} value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
+            <label className="text-colorText1">Select Category Material </label> {/* تعديل التسمية هنا */}
+            <Select
+              classNamePrefix="select"
+              value={categoryMaterialValue}
+              onChange={setCategoryMaterialValue}
+              options={valueMaterialCategory} // تعديل المتغير هنا
+              isClearable
+              isSearchable
+            />
 
             <label className="text-colorText1">Select Category</label>
-            <select
-              className="border-colorBorder border-2 p-2 w-full cursor-pointer focus:outline-mainColorHover"
+            <Select
+              classNamePrefix="select"
               value={categoryValue}
-              onChange={(e) => setCategoryValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueCategory?.map((x, index) => (
-                <option className="cursor-pointer" key={index} value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
-
-            <label className="text-colorText1">Select Dimension</label>
-            <select
-              className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover cursor-pointer"
-              value={dimensionValue}
-              onChange={(e) => setDimensionValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueDimension?.map((x, index) => (
-                <option className="cursor-pointer" key={index} value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
+              onChange={setCategoryValue}
+              options={valueCategory}
+              isClearable
+              isSearchable
+            />
 
             <label className="text-colorText1">Select Brand</label>
-            <select
-              className="border-colorBorder cursor-pointer border-2 p-2 w-full focus:outline-mainColorHover"
+            <Select
+              classNamePrefix="select"
               value={brandValue}
-              onChange={(e) => setBrandValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueBrand?.map((x, index) => (
-                <option className="cursor-pointer" key={index} value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
+              onChange={setBrandValue}
+              options={valueBrand}
+              isClearable
+              isSearchable
+            />
 
             <label className="text-colorText1">Select Condition</label>
-            <select
-              className="border-colorBorder border-2 cursor-pointer p-2 w-full focus:outline-mainColorHover"
+            <Select
+              classNamePrefix="select"
               value={conditionValue}
-              onChange={(e) => setConditionValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueCondition?.map((x, index) => (
-                <option key={index} className="cursor-pointer" value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
+              onChange={setConditionValue}
+              options={valueCondition}
+              isClearable
+              isSearchable
+            />
 
-            <label className="text-colorText1">Select Model Number</label>
-            <select
-              className="border-colorBorder border-2 p-2 cursor-pointer w-full focus:outline-mainColorHover"
-              value={modelNumberValue}
-              onChange={(e) => setModelNumberValue(e.target.value)}
-            >
-              <option value="" className="cursor-pointer">All</option>
-              {valueModelNumber?.map((x, index) => (
-                <option key={index} className="cursor-pointer" value={x.attributes.name}>
-                  {x.attributes.name}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
       </Drawer>
     </React.Fragment>
-  );
+  ); 
 }

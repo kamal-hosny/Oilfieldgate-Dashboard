@@ -12,13 +12,9 @@ const InformationAbouTheRequest = () => {
       overflow-x-auto
       ">
         <DataTime />
-        <div className="flex items-start gap-4 flex-col">
-          <StepperWithContent />
-        </div>
         <div className="mt-4 ">
           <RequestTableData />
         </div>
-        <DataSettings />
       </div>
     </div>
   );
