@@ -1,56 +1,61 @@
-import React, { useState } from "react";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Drawer, Button, Typography, IconButton } from "@material-tailwind/react";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useSelector } from "react-redux";
-import { Helmet } from "react-helmet-async";
 import Select from "react-select";
 
-export function DrawerDefault() {
+export function DrawerDefault({ filterValues, setFilterValues }) {
   const [open, setOpen] = useState(false);
-  const [categoryMaterialValue, setCategoryMaterialValue] = useState(null); // تعديل الاسم هنا
-  const [categoryValue, setCategoryValue] = useState(null);
-  const [brandValue, setBrandValue] = useState(null);
-  const [conditionValue, setConditionValue] = useState(null);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
-  const mockMaterialData = [
-    { label: "Metal", value: "Metal" },
-  ];
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
 
-  const mockCategoryData = [
-    { label: "Electronics", value: "Electronics" },
-    { label: "Furniture", value: "Furniture" },
-  ];
+  const valueMaterialCategory = useSelector((state) =>
+    state?.allMaterialCategories?.records?.data?.map((item) => ({
+      label: item.name,
+      value: item.name,
+    }))
+  );
+  const valueCategory = useSelector((state) =>
+    state?.allCategories?.records?.data?.map((item) => ({
+      label: item.name,
+      value: item.name,
+    }))
+  );
+  const valueBrand = useSelector((state) =>
+    state?.allBrands?.records?.data?.map((item) => ({
+      label: item.name,
+      value: item.name,
+    }))
+  );
+  const valueCondition = useSelector((state) =>
+    state?.allConditions?.records?.data?.map((item) => ({
+      label: item.name,
+      value: item.name,
+    }))
+  );
 
-  const mockBrandData = [
-    { label: "Brand A", value: "Brand A" },
-    { label: "Brand B", value: "Brand B" },
-  ];
-
-  const mockConditionData = [
-    { label: "New", value: "New" },
-    { label: "Used", value: "Used" },
-  ];
-
-  const valueMaterialCategory = useSelector((state) => state?.allMaterialCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockMaterialData; // تعديل المتغير هنا
-  const valueCategory = useSelector((state) => state?.allCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockCategoryData;
-  const valueBrand = useSelector((state) => state?.allBrands?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockBrandData;
-  const valueCondition = useSelector((state) => state?.allConditions?.records?.data?.map((item) => ({ label: item.name, value: item.name }))) || mockConditionData;
+  const handleFilterChange = useCallback((field, selectedOption) => {
+    setFilterValues((prev) => ({
+      ...prev,
+      [field]: selectedOption, // احفظ الكائن الكامل { label, value }
+    }));
+  }, [setFilterValues]);
+  
 
   return (
     <React.Fragment>
-      <Helmet>
-        <style type="text/css">{`
-        ${openDrawer === true && 'overflow: hidden;'}
-        `}</style>
-      </Helmet>
       <Button onClick={openDrawer} className="rounded-e-full p-2 h-[42px]">
         Filters <TuneIcon />
       </Button>
@@ -79,12 +84,12 @@ export function DrawerDefault() {
 
         <div className="flex flex-col gap-8">
           <div className="w-full flex flex-col gap-2">
-            <label className="text-colorText1">Select Category Material </label> {/* تعديل التسمية هنا */}
+            <label className="text-colorText1">Select Category Material </label>
             <Select
               classNamePrefix="select"
-              value={categoryMaterialValue}
-              onChange={setCategoryMaterialValue}
-              options={valueMaterialCategory} // تعديل المتغير هنا
+              value={filterValues.materialCategory}
+              onChange={(value) => handleFilterChange("materialCategory", value)}
+              options={valueMaterialCategory}
               isClearable
               isSearchable
             />
@@ -92,8 +97,8 @@ export function DrawerDefault() {
             <label className="text-colorText1">Select Category</label>
             <Select
               classNamePrefix="select"
-              value={categoryValue}
-              onChange={setCategoryValue}
+              value={filterValues.category}
+              onChange={(value) => handleFilterChange("category", value)}
               options={valueCategory}
               isClearable
               isSearchable
@@ -102,8 +107,8 @@ export function DrawerDefault() {
             <label className="text-colorText1">Select Brand</label>
             <Select
               classNamePrefix="select"
-              value={brandValue}
-              onChange={setBrandValue}
+              value={filterValues.brand}
+              onChange={(value) => handleFilterChange("brand", value)}
               options={valueBrand}
               isClearable
               isSearchable
@@ -112,16 +117,15 @@ export function DrawerDefault() {
             <label className="text-colorText1">Select Condition</label>
             <Select
               classNamePrefix="select"
-              value={conditionValue}
-              onChange={setConditionValue}
+              value={filterValues.condition}
+              onChange={(value) => handleFilterChange("condition", value)}
               options={valueCondition}
               isClearable
               isSearchable
             />
-
           </div>
         </div>
       </Drawer>
     </React.Fragment>
-  ); 
+  );
 }
