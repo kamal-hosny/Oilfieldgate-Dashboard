@@ -29,6 +29,7 @@ const Products = () => {
   
   const productData = useSelector((state) => state?.allProducts);
 
+  console.log(productData);
 
 
   return (
