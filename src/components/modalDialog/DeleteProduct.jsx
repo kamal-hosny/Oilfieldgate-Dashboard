@@ -10,6 +10,9 @@ const DeleteProduct = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state?.modal || {});
 
+
+  console.log(product);
+
   const confirmLog = useCallback((e) => {
     e.preventDefault();
     if (!product?._id) {

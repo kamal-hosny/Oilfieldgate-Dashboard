@@ -57,8 +57,13 @@ const getAllProductsSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
-        state.records = state.records.filter((el) => el.id !== action.payload);
+        if (Array.isArray(state.records)) {
+          state.records = state.records.filter((el) => el._id !== action.payload);
+        } else {
+          state.records = []; // fallback if state.records is not an array
+        }
       })
+      
       .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;

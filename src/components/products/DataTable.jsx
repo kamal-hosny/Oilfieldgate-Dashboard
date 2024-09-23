@@ -14,19 +14,20 @@ const DataTable = ({ productData }) => {
   const formatProductData = (apiData) => {
     return apiData.map((item) => ({
       _id: item._id,
-      HNSCode: item.data.HNS_code.replace(/'/g, ''), // Remove unwanted characters
-      productName: item.data.product_name.replace(/'/g, ''),
-      price: item.data.price,
-      currency: item.data.Currency?.replace(/'/g, '') || 'AED',
-      materialRefNo: item.data.material_Category?.replace(/'/g, '') || 'N/A',
-      dimension: item.data.Dimension?.replace(/'/g, '') || 'N/A',
-      unitOfMeasurement: item.data.Unit_of_Measurement?.replace(/'/g, '') || 'N/A',
-      condition: item.data.condition?.replace(/'/g, '') || 'N/A',
-      categories: item.data.Category ? [item.data.Category] : ['Uncategorized'],
-      supplyAvailability: item.data.instock,
+      HNSCode: item.data?.HNS_code ? item.data.HNS_code.replace(/'/g, '') : '-', // Check if HNS_code exists
+      productName: item.data?.product_name ? item.data.product_name.replace(/'/g, '') : '-', // Check if product_name exists
+      price: item.data?.price || '-', // Fallback to '-' if price is undefined
+      currency: item.data?.Currency ? item.data.Currency.replace(/'/g, '') : '-', // Check if Currency exists
+      materialRefNo: item.data?.material_Category ? item.data.material_Category.replace(/'/g, '') : '-', // Check if material_Category exists
+      dimension: item.data?.Dimension ? item.data.Dimension.replace(/'/g, '') : '-', // Check if Dimension exists
+      unitOfMeasurement: item.data?.Unit_of_Measurement ? item.data.Unit_of_Measurement.replace(/'/g, '') : '-', // Check if Unit_of_Measurement exists
+      condition: item.data?.condition ? item.data.condition.replace(/'/g, '') : '-', // Check if condition exists
+      categories: item.data?.Category ? [item.data.Category] : ['-'], // Check if Category exists
+      supplyAvailability: item.data?.instock || false, // Default to false if instock is undefined
       images: item.imgs?.map((img) => img.url) || [], // Ensure image URLs are correct
     }));
   };
+  
 
   // Use formatted data
   const [Data, setData] = useState([]);
@@ -46,7 +47,7 @@ const DataTable = ({ productData }) => {
       <div className="overflow-x-auto absolute w-full z-2">
         <div className="min-w-full inline-block align-middle">
           <div className="overflow-hidden border border-colorText2 rounded-sm">
-            <table className="min-w-full divide-y divide-colorText2">
+            <table className="min-w-full divide-y divide-colorText2 text-center">
               <thead className="text-colorText2 text-xs font-medium">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-start">HNSCode</th>

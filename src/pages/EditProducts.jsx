@@ -73,18 +73,6 @@ const EditProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-            {/* Currency */}
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Currency:</label>
-              <input
-                type="text"
-                {...register("currency", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
-              {errors.currency && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
             {/* Model Number */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Model Number:</label>
@@ -109,9 +97,9 @@ const EditProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-            {/* Unit of Measurement */}
+            {/* UOM */}
             <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Unit of Measurement:</label>
+              <label className="text-colorText1">UOM:</label>
               <input
                 type="text"
                 {...register("unitOfMeasurement", { required: true })}
@@ -121,10 +109,6 @@ const EditProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-
-
-
-
             {/* Condition */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Condition:</label>
@@ -137,14 +121,12 @@ const EditProducts = () => {
                 <option value="">Select a condition</option>
                 <option value="condition1">New</option>
                 <option value="condition1">Used</option>
-
               </select>
               {errors.condition && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
             {/* Brand  */}
-
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Brand:</label>
               <select
@@ -201,11 +183,7 @@ const EditProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-
-
-
-
-
+            
             {/* Material Category */}
             <div className="flex flex-col gap-1 col-span-6">
               <label className="text-colorText1">Material Category:</label>

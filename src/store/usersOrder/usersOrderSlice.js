@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllUsersOrders } from "./act/actGetAllUsersOrder";
-import { getOneOrder } from "./act/actGetOneUsersOrder";
+import { getUserOrders } from "./act/actGetUserOrders";
+
 
 const initialState = {
     records: [],
-    record: null, 
+    recordsUserOrder: [], 
     loading: false,
     error: null
 }
@@ -27,16 +28,16 @@ const getAllUsersOrderSlice = createSlice({
             state.loading = false;
             state.error = action.error
         })
-        // getOneOrder
-        .addCase(getOneOrder.pending, (state) => {
+        // getUserOrders
+        .addCase(getUserOrders.pending, (state) => {
             state.loading = true;
             state.error = null; 
         })
-        .addCase(getOneOrder.fulfilled, (state, action) => {
+        .addCase(getUserOrders.fulfilled, (state, action) => {
             state.loading = false;
-            state.record = action.payload;
+            state.recordsUserOrder = action.payload;
         })
-        .addCase(getOneOrder.rejected, (state, action) => {
+        .addCase(getUserOrders.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error;
         })

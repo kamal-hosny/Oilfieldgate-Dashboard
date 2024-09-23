@@ -6,7 +6,7 @@ export const getAllProducts = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
     
-      let query = `proudect?`;
+      let query = `proudect?limit=100`;
 
       // // Add the search parameter
       // if (data.term) {

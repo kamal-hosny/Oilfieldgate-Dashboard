@@ -1,7 +1,5 @@
 import React from "react";
 import { Card, Typography } from "@material-tailwind/react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../store/modal/modalSlice";
 
@@ -22,27 +20,14 @@ const TABLE_HEAD = [
   "",
 ];
 
-// Define a single table row
-const TABLE_ROW = {
-  rfq: "RFQ-001",
-  date: "25/08/2024",
-  customer: "Customer A",
-  status: "Quoted",
-  ogInvoice: "INV-001",
-  customerPO: "PO-001",
-  paymentDate: "",
-  paymentAED: "",
-  paymentReference: "",
-  shippingStatus: "Pending Material",
-  dn: "",
-  comments: "",
-};
-
-const RequestTableData = () => {
+const RequestTableData = ({ allUserOrders }) => {
   const dispatch = useDispatch();
+
+console.log(allUserOrders);
+
   return (
     <Card className="h-full w-full overflow-x-auto">
-      <table className="w-full  overflow-hidden text-left">
+      <table className="w-full overflow-hidden text-left">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
@@ -62,52 +47,64 @@ const RequestTableData = () => {
           </tr>
         </thead>
         <tbody className="!text-sm">
-          <tr>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.rfq}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.date}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.customer}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.status}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.ogInvoice}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.customerPO}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.paymentDate}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.paymentAED}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.paymentReference}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.shippingStatus}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.dn}
-            </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
-              {TABLE_ROW.comments}
-            </td>
-            <td className="px-3 py-2 flex items-center gap-3 justify-center h-full">
-              <button className="text-blue-600 hover:text-blue-900 ml-2 cursor-pointer">
-                Edit
-              </button>
-              <button className="text-red-600 hover:text-red-900 ">
-                Delete
-              </button>
-            </td>
-          </tr>
+          {allUserOrders?.map((order) => (
+            <tr key={order._id}>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["RFQ Date"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order.date || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order.customer || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order.Status || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["OG Invoice"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["Customer PO"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["Payment Date"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["Payment AED"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["Payment Reference"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order["Shipping status"] || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order.DN || "_"}
+              </td>
+              <td className="px-3 py-2 border-b border-blue-gray-50">
+                {order.Comments || "_"}
+              </td>
+              <td className="px-3 py-2 flex items-center gap-3 justify-center h-full">
+                <button
+                  className="text-green-600 hover:text-green-900 ml-2 cursor-pointer"
+                >
+                  Details
+                </button>
+                <button
+                  className="text-blue-600 hover:text-blue-900 ml-2 cursor-pointer"
+                >
+                  Edit
+                </button>
+                <button
+                  className="text-red-600 hover:text-red-900"
+                  onClick={() => dispatch(openModal({name: "DeleteOrder", product: order}))}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Card>

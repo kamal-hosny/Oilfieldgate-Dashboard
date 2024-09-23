@@ -7,6 +7,8 @@ import getAllConditionsSlice from '../store/condition/conditionSlice'
 import getAllUsersOrderSlice from '../store/usersOrder/usersOrderSlice'
 import getAllProductsSlice from '../store/products/productsSlice'
 import getAllUsersSlice from '../store/user/userSlice'
+import getAllOrderCartSlice from '../store/orderCart/orderCartSlice'
+import getAllOrdersSlice from '../store/order/orderSlice'
 import { postLoginAuthSliceReducer } from "../store/login/loginAuthSlice";
 export const store = configureStore({
     reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
         allConditions: getAllConditionsSlice,
         allUsersOrder: getAllUsersOrderSlice,
         allProducts: getAllProductsSlice,
-        allUsers: getAllUsersSlice
+        allUsers: getAllUsersSlice,
+        AllOrderCart: getAllOrderCartSlice,
+        AllOrders: getAllOrdersSlice
     }
 })

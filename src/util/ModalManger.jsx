@@ -10,6 +10,7 @@ import DeleteRequest from "../components/modalDialog/DeleteRequest";
 import DeleteSpecific from "../components/modalDialog/DeleteSpecific";
 import EditSpecific from "../components/modalDialog/EditSpecific";
 import AddSpecific from "../components/modalDialog/AddSpecific";
+import DeleteOrder from "../components/modalDialog/DeleteOrder";
 
 const ModalManager = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const ModalManager = () => {
     DeleteSpecific,
     EditSpecific,
     AddSpecific,
+    DeleteOrder
   };
   let renderComponent;
 

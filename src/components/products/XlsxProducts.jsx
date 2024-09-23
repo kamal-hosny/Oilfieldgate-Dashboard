@@ -44,7 +44,7 @@ const XlsxProducts = ({ productData }) => {
 
             const headers = [
                 'Model Number', 'HNS Code', 'Product Name', 'Price', 'Currency',
-                'Material Ref No', 'Dimension', 'Unit Of Measurement', 'Condition',
+                'Material Ref No', 'Dimension', 'UOM', 'Condition',
                 'Categories', 'Supply Availability', 'Brand', 'Weight', 'Size',
                 'Description', 'Document', 'Main Image', 'Additional Images'
             ];

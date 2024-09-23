@@ -9,7 +9,8 @@ import { getOneCondition } from "./act/actGetOneCondition";
 const initialState = { 
     records: [],
     loading: false,
-    error: null
+    error: null,
+    record: null
 }
 
 const getAllConditionsSlice = createSlice({

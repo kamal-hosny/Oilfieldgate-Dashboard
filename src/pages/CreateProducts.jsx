@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { useSelector } from "react-redux";
+import Select from "react-select";
 
 const CreateProducts = () => {
+
+  const valueMaterialCategory = useSelector((state) => state?.allMaterialCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name }))); // تعديل المتغير هنا
+  const valueCategory = useSelector((state) => state?.allCategories?.records?.data?.map((item) => ({ label: item.name, value: item.name })));
+  const valueBrand = useSelector((state) => state?.allBrands?.records?.data?.map((item) => ({ label: item.name, value: item.name })));
+  const valueCondition = useSelector((state) => state?.allConditions?.records?.data?.map((item) => ({ label: item.name, value: item.name })));
+
+
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const [previews, setPreviews] = useState([]);
@@ -65,23 +75,12 @@ const CreateProducts = () => {
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Price:</label>
               <input
+              min="0"
                 type="number"
-                {...register("price", { required: true })}
+                {...register("price", { required: true, validate: (value) => value >= 0 || "Price cannot be negative" })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
               />
               {errors.price && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-            {/* Currency */}
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Currency:</label>
-              <input
-                type="text"
-                {...register("currency", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
-              {errors.currency && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
@@ -97,6 +96,94 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
+            {/* Supply Availability */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">instock:</label>
+              <input
+                type="number"
+                min="0"
+                {...register("instock", { required: true, validate: (value) => value >= 0 || "Price cannot be negative" })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.instock && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+            {/* HNS Code    */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">HNS Code   :</label>
+              <input
+                type="text"
+                {...register("HNSCode  ", { required: true })}
+                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
+              />
+              {errors.HNSCode && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            {/* Material Category */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">Material Category:</label>
+              <Select
+                classNamePrefix="select"
+                options={valueMaterialCategory}
+                isClearable
+                isSearchable
+                onChange={(selected) => setValue("materialCategory", selected?.value)}
+              />
+              {errors.materialCategory && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+            {/* Category */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">Category:</label>
+              <Select
+                classNamePrefix="select"
+                options={valueCategory}
+                isClearable
+                isSearchable
+                onChange={(selected) => setValue("category", selected?.value)}
+              />
+              {errors.category && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+
+
+            {/* Brand */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">Brand:</label>
+              <Select
+                classNamePrefix="select"
+                options={valueBrand}
+                isClearable
+                isSearchable
+                onChange={(selected) => setValue("brand", selected?.value)}
+              />
+              {errors.brand && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+            {/* Condition */}
+            <div className="flex flex-col gap-1 col-span-3">
+              <label className="text-colorText1">Condition:</label>
+              <Select
+                classNamePrefix="select"
+                options={valueCondition}
+                isClearable
+                isSearchable
+                onChange={(selected) => setValue("condition", selected?.value)}
+              />
+              {errors.condition && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
             {/* Dimension */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Dimension:</label>
@@ -109,62 +196,6 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-            {/* Unit of Measurement */}
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Unit of Measurement:</label>
-              <input
-                type="text"
-                {...register("unitOfMeasurement", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
-              {errors.unitOfMeasurement && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-
-
-
-
-            {/* Condition */}
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Condition:</label>
-              <select
-                name="condition"
-                id="condition"
-                {...register("condition", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              >
-                <option value="">Select a condition</option>
-                <option value="condition1">New</option>
-                <option value="condition1">Used</option>
-
-              </select>
-              {errors.condition && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-            {/* Brand  */}
-
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">Brand:</label>
-              <select
-                name="brand"
-                id="brand"
-                {...register("brand", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              >
-                <option value="">Select a brand</option>
-                <option value="brand1">brand 1</option>
-                <option value="brand2">brand 2</option>
-                <option value="brand3">brand 3</option>
-              </select>
-              {errors.brand && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-
-
-
             {/* Weight  */}
             <div className="flex flex-col gap-1 col-span-3">
               <label className="text-colorText1">Weight :</label>
@@ -189,15 +220,15 @@ const CreateProducts = () => {
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
-            {/* HNS Code    */}
-            <div className="flex flex-col gap-1 col-span-3">
-              <label className="text-colorText1">HNS Code   :</label>
+            {/* UOM */}
+            <div className="flex flex-col gap-1 col-span-6">
+              <label className="text-colorText1">UOM:</label>
               <input
                 type="text"
-                {...register("HNSCode  ", { required: true })}
+                {...register("unitOfMeasurement", { required: true })}
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
               />
-              {errors.HNSCode && (
+              {errors.unitOfMeasurement && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
@@ -206,38 +237,10 @@ const CreateProducts = () => {
 
 
 
-            {/* Material Category */}
-            <div className="flex flex-col gap-1 col-span-6">
-              <label className="text-colorText1">Material Category:</label>
-              <select
-                name="materialCategory"
-                id="materialCategory"
-                {...register("materialCategory", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              >
-                <option value="">Select a category</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-                <option value="category3">Category 3</option>
-              </select>
-              {errors.materialCategory && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
 
 
-            {/* Supply Availability */}
-            <div className="flex flex-col gap-1 col-span-6">
-              <label className="text-colorText1">instock:</label>
-              <input
-                type="number"
-                {...register("instock", { required: true })}
-                className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-              />
-              {errors.instock && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
+
+
 
             {/* Description  */}
             <div className="flex flex-col gap-1 col-span-6">
