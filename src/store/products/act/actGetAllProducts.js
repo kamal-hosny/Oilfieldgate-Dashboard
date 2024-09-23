@@ -15,6 +15,7 @@ export const getAllProducts = createAsyncThunk(
       if (data.category) query += `&Category=${data.category.value}`;
       if (data.materialCategory) query += `&materialCategory=${data.materialCategory.value}`;
       if (data.pageNumber) query += `&page=${data.pageNumber.value}`;
+      if (data.search ) query += `&search=${data.search}`;
 
       const response = await axiosConfig.get(query);
       return response.data;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "../components/products/DataTable";
 import { Pagination } from "../components/products/Pagination";
@@ -11,9 +11,11 @@ import { getAllProducts } from "../store/products/act/actGetAllProducts";
 import { Button } from "@material-tailwind/react";
 import XlsxProducts from "../components/products/XlsxProducts";
 import { debounce } from 'lodash';
+import { AllStateContext } from "../context/AllStateContext";
 
 
 const Products = () => {
+  const { pageNumber, setPageNumber } = useContext(AllStateContext)
   const dispatch = useDispatch();
 
   // filters
@@ -25,8 +27,11 @@ const Products = () => {
   });
 
   const [term, setTerm] = useState("");
+
   const prevTerm = usePrevState(term);
 
+
+  // fetchProducts
   const fetchProducts = useCallback(
     debounce(() => {
       dispatch(
@@ -35,16 +40,28 @@ const Products = () => {
           category: filterValues.category,
           brand: filterValues.brand,
           condition: filterValues.condition,
+          search: term
         })
       );
     }, 500), 
-    [dispatch, filterValues ] // Include term in the dependencies
+    [dispatch, filterValues, term ]
   );
 
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    // search
+    useEffect(() => {
+      if(term === "") {
+        fetchProducts();
+      } else if (prevTerm !== term) {
+        const debounceSearch = setTimeout(fetchProducts, 1000);
+        setPageNumber(1)
+        return () => {
+          clearTimeout(debounceSearch)
+        }
+      }
+    }, [pageNumber, term, prevTerm, fetchProducts])  
+  
 
+  // get productData from api 
   const productData = useSelector((state) => state?.allProducts);
 
   return (
