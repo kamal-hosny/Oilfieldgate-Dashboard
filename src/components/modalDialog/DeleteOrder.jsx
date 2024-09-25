@@ -4,9 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder } from '../../store/order/act/actDeleteOrder';
 import { getUserOrders } from '../../store/usersOrder/act/actGetUserOrders';
 import { toast } from 'react-toastify';
+import { deleteOrderUserOrder } from '../../store/usersOrder/act/actDeleteOrderUserOrder';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import these hooks
 
 const DeleteOrder = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate
+  const location = useLocation(); // Get current location
   const order = useSelector((state) => state?.modal?.product);
 
   console.log(order);
@@ -18,11 +22,17 @@ const DeleteOrder = () => {
         toast.error('Order ID is missing.');
         return;
       }
-      dispatch(deleteOrder(order))
+      dispatch(deleteOrderUserOrder(order))
         .unwrap()
         .then(() => {
-          dispatch(getUserOrders(order?._id)); // Fetch updated orders
+          if (order?._id) {
+            dispatch(getUserOrders(order?._id));
+          }
           toast.success('Order deleted successfully!');
+          // Check if you're on the specific order-details route
+          if (location.pathname.startsWith('/checking-orders/order-details')) {
+            navigate(-1); // Go back one step
+          }
         })
         .catch((error) => {
           console.error('Error deleting order:', error);
@@ -31,7 +41,7 @@ const DeleteOrder = () => {
 
       dispatch(closeModal());
     },
-    [dispatch, order] // Add dispatch and order as dependencies
+    [dispatch, order, order?._id, navigate, location.pathname] // Add navigate and location.pathname to the dependencies
   );
 
   const cancel = useCallback(() => {

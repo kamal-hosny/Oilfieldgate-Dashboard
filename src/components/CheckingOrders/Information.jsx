@@ -32,6 +32,12 @@ const Information = () => {
     }
   }, [fetchOneUser, fetchAllUserOrders, id]);
 
+  useEffect(() => {
+    if(Array.isArray(allUserOrders) && allUserOrders.length === 0 && id) {
+      fetchAllUserOrders();
+    }
+  }, [allUserOrders, fetchAllUserOrders, id])
+
   if (!id) {
     return (
       <div className="p-4 bg-sectionColor flex items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
@@ -40,15 +46,19 @@ const Information = () => {
     );
   }
 
+  if (Array.isArray(allUserOrders) && allUserOrders.length === 0) {
+    return (
+      <div className="p-4 bg-sectionColor flex items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
+        No orders found for this user.
+      </div>
+    );
+  }
+
   return (
     <>
       <InformationHeader userData={userData} allUserOrders={allUserOrders} />
       <div className="p-4 bg-sectionColor h-full overflow-x-auto">
-        {!allUserOrders || allUserOrders.length === 0 ? (
-          <div>There is no information for this request.</div>
-        ) : (
           <InformationAbouTheRequest allUserOrders={allUserOrders} />
-        )}
       </div>
     </>
   );

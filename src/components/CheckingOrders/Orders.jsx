@@ -27,9 +27,9 @@ const getStatusColor = (status) => {
 const Orders = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usersorder =
+  const usersOrder =
     useSelector(
-      (state) => state?.allUsersOrder?.records?.data?.[0]?.usersorder
+      (state) => state?.allUsersOrder?.records?.data
     ) || [];
 
   const { mobileSize } = useContext(AllStateContext);
@@ -59,51 +59,56 @@ const Orders = () => {
     <div className="orders flex-1 bg-sectionColor py-2 px-2 h-full">
       <SearchCustomer />
       <div className="cards flex flex-col gap-2 overflow-y-auto h-full">
-        {usersorder.length > 0 ? (
-          usersorder.map((user) => (
-            <div
-              key={user._id}
-              className="card flex items-center p-2 gap-2 bg-sectionColorFocus hover:bg-sectionColorHover cursor-pointer border border-colorBorder"
-              onClick={() => handleCardClick(user._id)}
-            >
-              <Avatar
-                size="35px"
-                name={user.name || "N/A"}
-                round={true}
-                textSizeRatio={2}
-              />
-              <div className="info text-xs relative w-full">
-                <div className="name flex flex-col w-full">
-                  <p className="font-semibold text-colorText1 flex gap-1 break-words">
-                    {user?.contactName || "Unknown"} {user?.lastName || ""}
-                  </p>
-                  <span className="text-colorText2 break-words overflow-hidden whitespace-normal max-w-[150px]">
-                    {user?.companyName || ""}
-                  </span>
+        {usersOrder.length > 0 ? (
+          usersOrder.map((user) => {
+            const userOrder = user?.usersorder?.[0]; // Safely access the first element of usersorder
+            if (!userOrder) return null; // Skip rendering if usersorder is undefined or empty
 
-                  <div className="flex items-center justify-end gap-1">
-                    <div className=" time text-colorText2 text-[10px]">
-                      {user.time || "N/A"}
-                    </div>
+            return (
+              <div
+                key={user?._id}
+                className="card flex items-center p-2 gap-2 bg-sectionColorFocus hover:bg-sectionColorHover cursor-pointer border border-colorBorder"
+                onClick={() => handleCardClick(userOrder._id)}
+              >
+                <Avatar
+                  size="35px"
+                  name={user.name || "N/A"}
+                  round={true}
+                  textSizeRatio={2}
+                />
+                <div className="info text-xs relative w-full">
+                  <div className="name flex flex-col w-full">
+                    <p className="font-semibold text-colorText1 flex gap-1 break-words">
+                      {userOrder.contactName || "Unknown"} {userOrder.lastName || ""}
+                    </p>
+                    <span className="text-colorText2 break-words overflow-hidden whitespace-normal max-w-[150px]">
+                      {userOrder.companyName || ""}
+                    </span>
 
-                    <div>
-                      <span
-                        className="status h-2 w-2 block rounded-full"
-                        style={{ backgroundColor: getStatusColor(user.status) }}
-                        data-tooltip-id={`status-tooltip-${user._id}`}
-                        data-tooltip-content={user.status || "Unknown"}
-                      />
-                      <ReactTooltip
-                        id={`status-tooltip-${user._id}`}
-                        place="top"
-                        effect="solid"
-                      />
+                    <div className="flex items-center justify-end gap-1">
+                      <div className=" time text-colorText2 text-[10px]">
+                        {user.time || "N/A"}
+                      </div>
+
+                      <div>
+                        <span
+                          className="status h-2 w-2 block rounded-full"
+                          style={{ backgroundColor: getStatusColor(user?.status) }}
+                          data-tooltip-id={`status-tooltip-${user?._id}`}
+                          data-tooltip-content={user?.status || "Unknown"}
+                        />
+                        <ReactTooltip
+                          id={`status-tooltip-${user?._id}`}
+                          place="top"
+                          effect="solid"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p className="text-center text-colorText2">No orders available</p>
         )}

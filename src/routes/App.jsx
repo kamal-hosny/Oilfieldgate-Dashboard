@@ -12,6 +12,7 @@ import EditProducts from '../pages/EditProducts';
 import CreateSpecific from '../pages/CreateSpecific';
 import ToastNotification from '../components/UI/ToastNotification';
 import CoMobileSize from '../mobile/CoMobileSize';
+import OrderDetails from '../pages/OrderDetails';
 
 function App() {
   const Routing = createBrowserRouter([
@@ -46,6 +47,10 @@ function App() {
         {
           path: 'checking-orders/co-mobile-size/:id?',
           element: <CoMobileSize />,
+        },
+        {
+          path: 'checking-orders/order-details/:id?',
+          element: <OrderDetails />,
         },
         {
           path: 'create-specific',

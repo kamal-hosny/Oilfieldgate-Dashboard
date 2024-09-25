@@ -12,7 +12,8 @@ const DataTable = ({ productData }) => {
 
   // Clean data and transform API response to match your initialProductData structure
   const formatProductData = (apiData) => {
-    return apiData.map((item) => ({
+
+    return apiData.data.map((item) => ({
       _id: item._id,
       HNSCode: item.data?.HNS_code ? item.data.HNS_code.replace(/'/g, '') : '-', // Check if HNS_code exists
       productName: item.data?.product_name ? item.data.product_name.replace(/'/g, '') : '-', // Check if product_name exists
@@ -80,7 +81,7 @@ const DataTable = ({ productData }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       {product.images.length > 0 && (
                         <img
-                          src={product.images[0]}
+                          src={product.images[0] || "https://via.placeholder.com/50"}
                           alt={`product-${product._id}`}
                           className="w-10 h-10 object-cover inline-block mr-2"
                         />

@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteOrderUserOrder } from "./act/actDeleteOrderUserOrder";
 import { getAllUsersOrders } from "./act/actGetAllUsersOrder";
 import { getUserOrders } from "./act/actGetUserOrders";
-
 
 const initialState = {
     records: [],
     recordsUserOrder: [], 
     loading: false,
     error: null
-}
+};
 
 const getAllUsersOrderSlice = createSlice({
     name: "getAllUsersOrder",
@@ -26,7 +26,7 @@ const getAllUsersOrderSlice = createSlice({
         })
         .addCase(getAllUsersOrders.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.error
+            state.error = action.payload || action.error.message;
         })
         // getUserOrders
         .addCase(getUserOrders.pending, (state) => {
@@ -39,10 +39,27 @@ const getAllUsersOrderSlice = createSlice({
         })
         .addCase(getUserOrders.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.error;
+            state.error = action.payload || action.error.message;
         })
+        // deleteOrderUserOrder
+        .addCase(deleteOrderUserOrder.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(deleteOrderUserOrder.fulfilled, (state, action) => {
+            state.loading = false;
+            
+            if (Array.isArray(state.recordsUserOrder)) {
+                state.recordsUserOrder = state.recordsUserOrder.filter(
+                    (el) => el._id !== action.payload
+                );
+            }
+        })
+        .addCase(deleteOrderUserOrder.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload || action.error.message;
+        });
     }
-    
-})
+});
 
-export default getAllUsersOrderSlice.reducer
+export default getAllUsersOrderSlice.reducer;

@@ -11,6 +11,8 @@ import DeleteSpecific from "../components/modalDialog/DeleteSpecific";
 import EditSpecific from "../components/modalDialog/EditSpecific";
 import AddSpecific from "../components/modalDialog/AddSpecific";
 import DeleteOrder from "../components/modalDialog/DeleteOrder";
+import EditOrder from "../components/modalDialog/EditOrder";
+import RemoveOrderProduct from "../components/modalDialog/RemoveOrderProduct";
 
 const ModalManager = () => {
   const dispatch = useDispatch();
@@ -26,7 +28,9 @@ const ModalManager = () => {
     DeleteSpecific,
     EditSpecific,
     AddSpecific,
-    DeleteOrder
+    DeleteOrder,
+    EditOrder,
+    RemoveOrderProduct
   };
   let renderComponent;
 

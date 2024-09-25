@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllOrders } from "./act/actGetAllOrder";
 import { createOrder } from "./act/actCreateOrder";
-import { deleteOrder } from "./act/actDeleteOrder"
+import { deleteOrder } from "./act/actDeleteOrder";
 import { editOrder } from "./act/actEditOrder";
 import { getOneOrder } from "./act/actGetOneOrder";
 
@@ -37,10 +37,10 @@ const getAllOrdersSlice = createSlice({
         })
         .addCase(createOrder.fulfilled, (state, action) => {
             state.loading = false;
-            if( Array.isArray(state.records)) {
-                state.records.push(action.payload)
+            if (Array.isArray(state.records)) {
+                state.records.push(action.payload);
             } else {
-                state.records = [action.payload]
+                state.records = [action.payload];
             }
         })
         .addCase(createOrder.rejected, (state, action) => {
@@ -48,7 +48,7 @@ const getAllOrdersSlice = createSlice({
             state.error = action.error;
         })
         // deleteOrder
-        .addCase(deleteOrder.pending , (state) => {
+        .addCase(deleteOrder.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
@@ -67,8 +67,8 @@ const getAllOrdersSlice = createSlice({
         })
         .addCase(editOrder.fulfilled, (state, action) => {
             state.loading = false;
-            if(Array.isArray(state.records)) {
-                const index = state.records.findIndex(product.id === action.payload.id);
+            if (Array.isArray(state.records)) {
+                const index = state.records.findIndex((product) => product._id === action.payload._id);
                 if (index !== -1) {
                     state.records[index] = action.payload;
                 }
@@ -76,7 +76,7 @@ const getAllOrdersSlice = createSlice({
         })
         .addCase(editOrder.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload;
+            state.error = action.error;
         })
         // getOneOrder
         .addCase(getOneOrder.pending, (state) => {
@@ -94,4 +94,4 @@ const getAllOrdersSlice = createSlice({
     }
 })
 
-export default getAllOrdersSlice.reducer
+export default getAllOrdersSlice.reducer;

@@ -8,7 +8,6 @@ const FullSizeCheckingOrders = () => {
       <div className="col-span-2 lg:col-span-1" style={{ height: "calc(100vh - 115px)" }}>
         <Orders />
       </div>
-
       <div className="col-span-3 lg:col-span-4" style={{ height: "calc(100vh - 115px)" }}>
         <Information />
       </div>

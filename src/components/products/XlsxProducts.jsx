@@ -5,7 +5,7 @@ import { Button } from "@material-tailwind/react";
 import { saveAs } from 'file-saver';
 
 const XlsxProducts = ({ productData }) => {
-    const data = productData?.records?.data;
+    const data = productData?.records?.data?.data;
 
     // Cache for image URLs to base64
     const imageCache = {};

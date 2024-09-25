@@ -4,6 +4,7 @@ import { axiosConfig } from "../../../services/axiosConfig";
 export const editOrder = createAsyncThunk(
     "orders/editOrder",
     async (data, thunkApi) => {
+        console.log(data);
         try {
             const response = await axiosConfig.put(`order/data/${data._id}`, data, {
                 headers: {
