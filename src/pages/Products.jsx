@@ -75,7 +75,7 @@ const Products = () => {
                 Add product
               </Button>
             </Link>
-            {/* <XlsxProducts productData={productData} /> */}
+            <XlsxProducts productData={productData} />
           </div>
           <div className="flex items-center justify-center">
             <SearchProducts term={term} setTerm={setTerm} />
