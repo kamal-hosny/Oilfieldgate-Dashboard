@@ -13,8 +13,8 @@ const DataTable = ({ productData }) => {
   // Clean data and transform API response to match your initialProductData structure
   const formatProductData = (apiData) => {
 
-    return apiData.data.map((item) => ({
-      _id: item._id,
+    return apiData?.data?.map((item) => ({
+      _id: item?._id,
       HNSCode: item.data?.HNS_code ? item.data.HNS_code.replace(/'/g, '') : '-', // Check if HNS_code exists
       productName: item.data?.product_name ? item.data.product_name.replace(/'/g, '') : '-', // Check if product_name exists
       price: item.data?.price || '-', // Fallback to '-' if price is undefined
@@ -66,7 +66,7 @@ const DataTable = ({ productData }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-colorText2 text-colorText1">
-                {Data.map((product) => (
+                {Data?.map((product) => (
                   <tr key={product._id} className="hover:bg-sectionColorHover">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{product.HNSCode}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{product.productName}</td>
