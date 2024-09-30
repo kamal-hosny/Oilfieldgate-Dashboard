@@ -24,8 +24,16 @@ const cloneOrderProductSlice = createSlice({
         const id = action.payload;
         state.orderData = state.orderData.filter((item) => item._id !== id);
       },
+      addItem: (state, action) => {
+        const newItem = action.payload;
+        if(!state.orderData) {
+          state.orderData = [newItem];
+        } else {
+          state.orderData.push(newItem);
+        }
+      }
     },
   });
   
-export const { setCloneOrderData, updateQuantity, removeItem } = cloneOrderProductSlice.actions;
+export const { setCloneOrderData, updateQuantity, removeItem, addItem } = cloneOrderProductSlice.actions;
 export default cloneOrderProductSlice.reducer;

@@ -4,9 +4,9 @@ import { axiosConfig } from "../../../services/axiosConfig";
 export const getAllProducts = createAsyncThunk(
   'products/getAllProducts',
   async (data, thunkAPI) => {
-    console.log(data);
+    // console.log(data);
     try {
-      let query = `proudect?limit=100`;
+      let query = `proudect?`;
 
       // Dynamically add filters based on the passed data
       if (data.modelNumber) query += `&ModelNumber=${data.modelNumber.value}`;
@@ -16,6 +16,8 @@ export const getAllProducts = createAsyncThunk(
       if (data.materialCategory) query += `&materialCategory=${data.materialCategory.value}`;
       if (data.pageNumber) query += `&page=${data.pageNumber.value}`;
       if (data.search ) query += `&search=${data.search}`;
+      if (data.page ) query += `&page=${data.page}`;
+      if (data.limit ) query += `&limit=${data.limit || 10}`;
 
       const response = await axiosConfig.get(query);
       return response.data;

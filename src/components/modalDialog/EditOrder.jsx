@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../store/modal/modalSlice";
 import { useForm } from "react-hook-form";
-import { editOrderCart } from "../../store/orderCart/act/actEditOrderCart";
-import { editOrder } from "../../store/order/act/actEditOrder";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify"; // Add toast import
-import { getUserOrders } from "../../store/usersOrder/act/actGetUserOrders";
+import { closeModal } from "../../store/modal/modalSlice";
+import { editOrder } from "../../store/order/act/actEditOrder";
 import { getOneOrder } from "../../store/order/act/actGetOneOrder";
 
 const EditOrder = () => {
@@ -19,6 +17,8 @@ const EditOrder = () => {
 
     const data = useSelector((state) => state?.modal?.product);
 
+    console.log(data);
+    
     // Distribute data values to form fields
     useEffect(() => {
         if (data) {
@@ -31,7 +31,7 @@ const EditOrder = () => {
             setValue("Payment_Reference", data?.["Payment Reference"] || "");
             setValue("RFQ_Date", data?.["RFQ Date"] || "");
             setValue("Shipping_status", data?.["Shipping status"] || "");
-            setValue("status", data?.status || "");
+            setValue("status", data?.Status || "");
         }
     }, [data, setValue]);
 
@@ -46,7 +46,7 @@ const EditOrder = () => {
                 _id: data?._id,
                 "RFQ Date": data?.["RFQ Date"],
                 Customer: data?.Customer,
-                Status: formData.status || "pending",
+                status: formData.status || "pending",
                 OG_Invoice: formData.OG_Invoice || "N/A",
                 Customer_PO: formData.Customer_PO || "N/A",
                 Payment_Date: formData.Payment_Date || "",
@@ -60,7 +60,7 @@ const EditOrder = () => {
             .unwrap()
             .then(() => {
                 toast.success("Order updated successfully!");
-                dispatch(getOneOrder(data?._id))
+                dispatch(getOneOrder(data?._id));
             })
             .catch((error) => {
                 console.error("Error updating:", error);
@@ -93,10 +93,11 @@ const EditOrder = () => {
                             className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
                         >
                             <option value="">Select Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="shipped">Shipped</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="cancelled">Cancelled</option>
+                            <option value="quoted">Quoted</option>
+                            <option value="sent">Sent</option>
+                            <option value="approved">Approved</option>
+                            <option value="on-hold">On Hold</option>
+                            <option value="rejected">Rejected</option>
                         </select>
                         {errors.status && (
                             <span className="text-red-500">This field is required</span>
@@ -167,20 +168,25 @@ const EditOrder = () => {
                             <span className="text-red-500">This field is required</span>
                         )}
                     </div>
-
                     {/* Shipping Status */}
                     <div className="flex flex-col gap-1 col-span-3">
                         <label className="text-colorText1">Shipping Status:</label>
-                        <input
-                            type="text"
+                        <select
                             {...register("Shipping_status", { required: true })}
                             className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
-                        />
+                        >
+                            <option value="">Select Status</option>
+                            <option value="pending-material">Pending Material</option>
+                            <option value="pending-in-progress">Pending in progress</option>
+                            <option value="pending-shipping-quote">Pending Shipping quote</option>
+                            <option value="pending-collection">Pending Collection</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                        </select>
                         {errors.Shipping_status && (
                             <span className="text-red-500">This field is required</span>
                         )}
                     </div>
-
                     {/* DN */}
                     <div className="flex flex-col gap-1 col-span-3">
                         <label className="text-colorText1">DN:</label>

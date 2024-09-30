@@ -1,8 +1,14 @@
+// React
 import React, { useState, useEffect, useCallback } from "react";
-import { Drawer, Button, Typography, IconButton } from "@material-tailwind/react";
-import TuneIcon from "@mui/icons-material/Tune";
+// Redux
 import { useSelector } from "react-redux";
+// Material-tailwind
+import { Drawer, Button, Typography, IconButton } from "@material-tailwind/react";
+// Icons
+import TuneIcon from "@mui/icons-material/Tune";
+// Other-libraries
 import Select from "react-select";
+
 
 export function DrawerDefault({ filterValues, setFilterValues }) {
   const [open, setOpen] = useState(false);

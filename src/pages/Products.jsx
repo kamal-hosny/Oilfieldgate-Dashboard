@@ -4,18 +4,15 @@ import DataTable from "../components/products/DataTable";
 import { Pagination } from "../components/products/Pagination";
 import { DrawerDefault } from "../components/products/DrawerDefault";
 import SearchProducts from "../components/products/SearchProducts";
-import usePrevState from "../context/prevState";
-import { getAllCategories } from "../store/category/act/actGetAllCategories";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../store/products/act/actGetAllProducts";
 import { Button } from "@material-tailwind/react";
 import XlsxProducts from "../components/products/XlsxProducts";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 import { AllStateContext } from "../context/AllStateContext";
 
-
 const Products = () => {
-  const { pageNumber, setPageNumber } = useContext(AllStateContext)
+  const { pageNumber, setPageNumber } = useContext(AllStateContext);
   const dispatch = useDispatch();
 
   // filters
@@ -27,42 +24,39 @@ const Products = () => {
   });
 
   const [term, setTerm] = useState("");
+  const [limit, setLimit] = useState(10);
 
-  const prevTerm = usePrevState(term);
-
-
-  // fetchProducts
-  const fetchProducts = useCallback(
-    debounce(() => {
+  // Debounced fetching function, stable across renders
+  const debouncedFetchProducts = useCallback(
+    debounce((pageNumber, term, filterValues, limit) => {
       dispatch(
         getAllProducts({
           materialCategory: filterValues.materialCategory,
           category: filterValues.category,
           brand: filterValues.brand,
           condition: filterValues.condition,
-          search: term
+          search: term,
+          page: pageNumber,
+          limit,
         })
       );
-    }, 500), 
-    [dispatch, filterValues, term ]
+    }, 500),
+    [dispatch]
   );
 
-    // search
-    useEffect(() => {
-      if(term === "") {
-        fetchProducts();
-      } else if (prevTerm !== term) {
-        const debounceSearch = setTimeout(fetchProducts, 1000);
-        setPageNumber(1)
-        return () => {
-          clearTimeout(debounceSearch)
-        }
-      }
-    }, [pageNumber, term, prevTerm, fetchProducts])  
-  
+  // Effect to fetch products when dependencies change
+  useEffect(() => {
+    debouncedFetchProducts(pageNumber, term, filterValues, limit);
+  }, [pageNumber, term, filterValues, limit, debouncedFetchProducts]);
+
+  // Reset page number when filters or search term change
+  useEffect(() => {
+    setPageNumber(1);
+  }, [term, filterValues, setPageNumber, limit]);
 
   // get productData from api 
   const productData = useSelector((state) => state?.allProducts);
+  const meta = productData?.records?.meta;
 
   return (
     <div className="flex flex-col gap-4">
@@ -83,7 +77,21 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <Pagination />
+      <div className="flex justify-between items-center ">
+        <Pagination lastPage={meta?.last_page} currentPage={pageNumber} setCurrentPage={setPageNumber} />
+        <select
+          className="border-black border p-2 w-fit rounded-md focus:outline-mainColorHover"
+          value={limit}
+          onChange={(e) => setLimit(Number(e.target.value))}
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+          <option value="99999">All</option>
+        </select>
+      </div>
       <DataTable productData={productData} />
     </div>
   );

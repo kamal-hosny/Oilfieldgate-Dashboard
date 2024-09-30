@@ -48,40 +48,40 @@ const RequestTableData = ({ allUserOrders }) => {
       <tbody className="!text-sm">
         {allUserOrders?.map((order) => (
           <tr key={order._id}>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order._id || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {formatDate(order["RFQ Date"]) || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order.Customer || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order.Status || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["OG Invoice#"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["Customer PO#"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["Payment Date"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["Payment AED"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["Payment Reference"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["Shipping status"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order["DN#"] || "_"}
             </td>
-            <td className="px-3 py-2 border-b border-blue-gray-50">
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order.Comments || "_"}
             </td>
             <td className="px-3 py-2 flex items-center gap-3 justify-center">

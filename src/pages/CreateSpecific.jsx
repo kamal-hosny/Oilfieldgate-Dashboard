@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "../store/category/act/actGetAllCategories";
 // Modal
 import { openModal } from "../store/modal/modalSlice";
+import Loading from "../components/UI/Loading";
 
 // Component for Card Content
 const CardContent = React.memo(({ title, items }) => {
@@ -71,7 +72,10 @@ const CreateSpecific = () => {
       allMaterialCategories: state?.allMaterialCategories?.records?.data,
     }));
 
+    const {loading , error} = useSelector((state) => state?.allBrands)
+
   return (
+    <Loading classStyle="h-screen" className="" loading={loading} error={error} >
     <div className="flex flex-col gap-4">
       <h1>All Specific</h1>
       <div className="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -84,7 +88,11 @@ const CreateSpecific = () => {
         <CardContent title="Condition" items={allConditions || []} />
       </div>
     </div>
+    </Loading>
   );
 };
 
 export default React.memo(CreateSpecific);
+
+
+  

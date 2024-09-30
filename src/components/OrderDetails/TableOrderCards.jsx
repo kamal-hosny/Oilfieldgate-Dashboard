@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateQuantity, removeItem } from '../../store/cloneOrderProduct/cloneOrderProductSlice';
 import formatCurrency from '../../util/formatCurrency';
 import { openModal } from '../../store/modal/modalSlice';
+import { toast } from 'react-toastify';
 
 const TABLE_HEAD = [
   "Image",
@@ -18,19 +19,33 @@ const TableOrderCards = ({ orderData }) => {
 
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity > 0) {
-      dispatch(updateQuantity({ id, newQuantity })); // تحديث الكمية باستخدام Redux
+      dispatch(updateQuantity({ id, newQuantity }));
     }
   };
 
-  const handleIncreaseQuantity = (id, currentQuantity) => {
-    handleUpdateQuantity(id, currentQuantity + 1); // زيادة الكمية
+  const handleIncreaseQuantity = (id, currentQuantity, instock) => {
+    if (currentQuantity < instock) {
+      handleUpdateQuantity(id, currentQuantity + 1);
+    }else{
+      toast.warn("The requested quantity exceeds available stock!");
+
+    }
   };
 
   const handleDecreaseQuantity = (id, currentQuantity) => {
     if (currentQuantity > 1) {
-      handleUpdateQuantity(id, currentQuantity - 1); // تقليل الكمية
+      handleUpdateQuantity(id, currentQuantity - 1);
     }
   };
+
+  // Check if orderData is a valid array
+  if (!Array.isArray(orderData) || orderData.length === 0) {
+    return (
+      <div className='grid'>
+        <p>No orders found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className='grid'>
@@ -50,7 +65,7 @@ const TableOrderCards = ({ orderData }) => {
           </tr>
         </thead>
         <tbody className="!text-sm">
-          {orderData?.map((x) => (
+          {orderData.map((x) => (
             <tr key={x._id}>
               <td className="px-3 py-2 border-b border-blue-gray-50 flex justify-center h-full">
                 <img
@@ -78,7 +93,7 @@ const TableOrderCards = ({ orderData }) => {
                   />
                   <button
                     className="px-2 py-1 border border-colorBorder h-8 rounded-r bg-gray-100 hover:bg-gray-200"
-                    onClick={() => handleIncreaseQuantity(x._id, x.Quantity)}
+                    onClick={() => handleIncreaseQuantity(x._id, x.Quantity, x.instock)}
                   >
                     +
                   </button>

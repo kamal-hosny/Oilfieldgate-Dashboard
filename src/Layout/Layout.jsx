@@ -5,11 +5,12 @@ import HorizontalNavbar from '../components/HorizontalNavbar/HorizontalNavbar';
 import ModalManager from '../util/ModalManger';
 import { AllStateContext } from '../context/AllStateContext';
 import ToastNotification from '../components/UI/ToastNotification';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategories } from '../store/category/act/actGetAllCategories';
 import { getAllBrands as fetchAllBrands } from '../store/brand/act/actGetAllBrands';
 import { getAllConditions } from '../store/condition/act/actGetAllConditions';
 import { getAllMaterialCategories } from '../store/materialCategory/act/actGetAllMaterialCategories';
+import { loadUserFromCookies } from '../store/login/loginAuthSlice';
 
 const Layout = () => {
   const { mobileSize, openMenu } = useContext(AllStateContext);
@@ -27,6 +28,10 @@ const Layout = () => {
     fetchConditions();
     fetchMaterialCategories();
   }, [fetchCategories, fetchBrands, fetchConditions, fetchMaterialCategories]);
+
+  useEffect(() => {
+    dispatch(loadUserFromCookies()); // Load user data from cookies on app load
+  }, [dispatch]);
 
   return (
     <>

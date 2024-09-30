@@ -1,7 +1,11 @@
+// React
 import React, { useState, useEffect } from 'react';
-import { openModal } from '../../store/modal/modalSlice';
-import { useDispatch } from 'react-redux';
+// Router Dom
 import { useNavigate } from 'react-router-dom';
+// Redux
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../store/modal/modalSlice';
+import Loading from '../UI/Loading';
 
 const DataTable = ({ productData }) => {
   const navigate = useNavigate();
@@ -40,15 +44,13 @@ const DataTable = ({ productData }) => {
     }
   }, [records]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
+    <Loading loading={loading} error={error} >
     <div className="flex flex-col w-full relative">
       <div className="overflow-x-auto absolute w-full z-2">
         <div className="min-w-full inline-block align-middle">
           <div className="overflow-hidden border border-colorText2 rounded-sm">
-            <table className="min-w-full divide-y divide-colorText2 text-center">
+            <table className="min-w-full divide-y divide-colorText2 text-center ">
               <thead className="text-colorText2 text-xs font-medium">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-start">HNSCode</th>
@@ -68,7 +70,7 @@ const DataTable = ({ productData }) => {
               <tbody className="divide-y divide-colorText2 text-colorText1">
                 {Data?.map((product) => (
                   <tr key={product._id} className="hover:bg-sectionColorHover">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{product.HNSCode}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">{product.HNSCode}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{product.productName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">{product.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">{product.currency}</td>
@@ -90,7 +92,7 @@ const DataTable = ({ productData }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <button
                         onClick={() => navigate("/products/edit")}
-                        className="text-blue-600 hover:text-blue-900 mr-2"
+                        className="text-blue-600 hover:text-blue-900 mr-2 h-full"
                       >
                         Edit
                       </button>
@@ -109,6 +111,7 @@ const DataTable = ({ productData }) => {
         </div>
       </div>
     </div>
+    </Loading>
   );
 };
 

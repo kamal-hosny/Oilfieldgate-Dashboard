@@ -4,8 +4,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../store/modal/modalSlice';
 import XlsxOneOrder from './xlsx/XlsxOneOrder';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const InformationOneOrderHeader = () => {
+const InformationOneOrderHeader = ({orderData}) => {
   const dispatch = useDispatch()
 
 
@@ -20,10 +21,16 @@ const InformationOneOrderHeader = () => {
         </span>
       </div>
       <span className="text-colorText1 flex gap-2 font-bold">
-        <XlsxOneOrder />
-        <Button onClick={() => dispatch(openModal('UserDetails'))} className="bg-mainColor hover:bg-mainColorHover rounded-lg p-2">
+        <XlsxOneOrder orderData={orderData} />
+        <Button       data-tooltip-id="User-Details"
+      data-tooltip-content="User Details" onClick={() => dispatch(openModal('UserDetails'))} className="bg-mainColor hover:bg-mainColorHover rounded-lg p-2">
           <PersonIcon />
         </Button>
+        <ReactTooltip
+      id="User-Details"
+      place="top"
+      effect="solid"
+    />
       </span>
     </div>
   );

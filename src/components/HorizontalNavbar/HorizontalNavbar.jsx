@@ -8,8 +8,6 @@ import CloseIcon from "@mui/icons-material/Close";
 const HorizontalNavbar = () => {
     
     const { mobileSize, openMenu, changeMenuValue } = useContext(AllStateContext);
-
-    console.log(openMenu);
     
     const menuIcon = useMemo(() => {
         return openMenu ? <MenuIcon /> :  <CloseIcon />;

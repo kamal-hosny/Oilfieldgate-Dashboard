@@ -1,8 +1,12 @@
+// React
 import React from 'react';
+// Icons
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ExcelJS from 'exceljs';
 import { Button } from "@material-tailwind/react";
 import { saveAs } from 'file-saver';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 
 const XlsxProducts = ({ productData }) => {
     const data = productData?.records?.data?.data;
@@ -130,12 +134,18 @@ const XlsxProducts = ({ productData }) => {
     return (
         <div>
             <Button
-                className="bg-green-600 flex items-center gap-2 py-2"
+              className="bg-green-600 rounded-md flex items-center gap-2 p-2 w-fit"
                 onClick={exportToExcel}
+                data-tooltip-id="export-excel-products"
+                data-tooltip-content="Export Excel"
             >
                 <InsertDriveFileIcon />
-                Export to XLSX
             </Button>
+            <ReactTooltip
+                id="export-excel-products"
+                place="top"
+                effect="solid"
+            />
         </div>
     );
 };

@@ -16,7 +16,7 @@ const CustomerData = () => {
   } : null;
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <div className="w-full max-w-md">
         {contactData ? (
           <div className="overflow-hidden border border-gray-300 rounded-sm">

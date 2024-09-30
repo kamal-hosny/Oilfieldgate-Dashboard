@@ -5,13 +5,17 @@ import InformationAbouTheRequest from './InformationAbouTheRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneUser } from '../../store/user/act/actGetOneUser';
 import { getUserOrders } from '../../store/usersOrder/act/actGetUserOrders';
+import Loading from '../UI/Loading';
 
 const Information = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const userData = useSelector(state => state?.allUsers?.record?.data);
-  const allUserOrders = useSelector(state => state?.allUsersOrder?.recordsUserOrder?.data);
+  // const allUserOrders = useSelector(state => state?.allUsersOrder?.recordsUserOrder?.data);
+
+  const { loading, error, recordsUserOrder } = useSelector(state => state?.allUsersOrder);
+  const allUserOrders = recordsUserOrder?.data
 
   const fetchOneUser = useCallback(() => {
     if (id) {
@@ -56,10 +60,12 @@ const Information = () => {
 
   return (
     <>
+        <Loading classStyle="h-full" className="" loading={loading} error={error} >
       <InformationHeader userData={userData} allUserOrders={allUserOrders} />
       <div className="p-4 bg-sectionColor h-full overflow-x-auto">
           <InformationAbouTheRequest allUserOrders={allUserOrders} />
       </div>
+      </Loading>
     </>
   );
 };
