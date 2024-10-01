@@ -1,21 +1,43 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import adminToken, { axiosConfig } from "../../../services/axiosConfig";
+import { axiosConfig } from "../../../services/axiosConfig";
+import Cookies from "js-cookie";
+
+// Safely handle the auth cookie
+let token;
+const authCookie = Cookies.get('auth');
+
+if (authCookie) {
+  try {
+    token = JSON.parse(authCookie).token;
+  } catch (error) {
+    console.error("Error parsing auth cookie:", error);
+    token = null; // Handle invalid token
+  }
+} else {
+  console.error("Auth cookie is not available.");
+  token = null; // Handle missing cookie
+}
+
+console.log(token);
 
 export const getAllUsersOrders = createAsyncThunk(
     "UsersOrder/createUsersOrder",
-    async (data , thunkApi) => {
+    async (data, thunkApi) => {
+        if (!token) {
+            return thunkApi.rejectWithValue("Authentication token is missing or invalid");
+        }
+
         try {
             const response = await axiosConfig.post("order/user", data, {
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
-                    "token": adminToken
+                    "token": token
                 }
-            })
+            });
             return response.data;
-        }
-        catch (error) {
+        } catch (error) {
             const message = error.response?.data || error.message || "An unknown error occurred";
             return thunkApi.rejectWithValue(message);
         }
     }
-)
+);

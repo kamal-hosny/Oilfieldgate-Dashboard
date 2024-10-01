@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import adminToken, { axiosConfig } from "../../../services/axiosConfig";
+import { axiosConfig } from "../../../services/axiosConfig";
 
+const { token } = JSON.parse(Cookies.get('auth'))
 
 export const createUsersOrder = createAsyncThunk(
     "UsersOrder/createUsersOrder",
@@ -9,7 +10,7 @@ export const createUsersOrder = createAsyncThunk(
             const response = await axiosConfig.post("order/user/create", data, {
                 Headers: {
                     "Content-type": "application/json; charset=UTF-8",
-                    "token": adminToken
+                    "token": token
                 }
             }) 
             return response.data

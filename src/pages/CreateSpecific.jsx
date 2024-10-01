@@ -10,6 +10,7 @@ import { getAllCategories } from "../store/category/act/actGetAllCategories";
 // Modal
 import { openModal } from "../store/modal/modalSlice";
 import Loading from "../components/UI/Loading";
+import withGuard from "../util/withGuard";
 
 // Component for Card Content
 const CardContent = React.memo(({ title, items }) => {
@@ -92,7 +93,7 @@ const CreateSpecific = () => {
   );
 };
 
-export default React.memo(CreateSpecific);
+export default withGuard(React.memo(CreateSpecific));
 
 
   

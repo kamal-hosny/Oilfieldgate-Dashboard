@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const initialState = {
     user: null,
-    isAuthenticated: false,
+    isAuthenticated: true,
     loading: false,
     error: null,
 };
@@ -17,14 +17,20 @@ const postLoginAuthSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.isAuthenticated = false;
-            Cookies.remove("auth"); // Remove auth cookie
+            Cookies.remove("auth"); 
         },
         loadUserFromCookies: (state) => {
-            const authCookie = Cookies.get("auth"); // Get auth data from cookies
+            const authCookie = Cookies.get("auth"); 
             if (authCookie) {
                 const authData = JSON.parse(authCookie);
-                state.user = authData?.test; // Assuming user data is inside 'test'
-                state.isAuthenticated = true;
+                if (authData?.test) {
+                    state.user = authData?.test; 
+                    state.isAuthenticated = true;
+                } else {
+                    state.isAuthenticated = false; 
+                }
+            } else {
+                state.isAuthenticated = false; 
             }
         }
     },
@@ -38,9 +44,9 @@ const postLoginAuthSlice = createSlice({
                 state.loading = false;
                 const authData = action.payload?.test;
                 if (authData) {
-                    state.user = authData; // Set user data
+                    state.user = authData; 
                     state.isAuthenticated = true;
-                    Cookies.set('auth', JSON.stringify(action.payload)); // Save user data in cookies
+                    Cookies.set('auth', JSON.stringify(action.payload)); 
                 }
             })
             .addCase(loginAuth.rejected, (state, action) => {
@@ -50,6 +56,6 @@ const postLoginAuthSlice = createSlice({
     }
 });
 
-// Export actions and reducer
+
 export const { logout, loadUserFromCookies } = postLoginAuthSlice.actions;
 export const postLoginAuthSliceReducer = postLoginAuthSlice.reducer;

@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { getOneUser } from '../store/user/act/actGetOneUser';
 import Loading from '../components/UI/Loading';
 import { openModal } from '../store/modal/modalSlice';
+import withGuard from '../util/withGuard';
 
 const OrderDetails = () => {
   const dispatch = useDispatch();
@@ -121,4 +122,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default withGuard(OrderDetails);

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { AllStateContext } from "../context/AllStateContext";
 import FullSizeCheckingOrders from "../components/CheckingOrders/FullSizeCheckingOrders";
 import MobileSizeCheckingOrders from "../components/CheckingOrders/MobileSizeCheckingOrders";
+import withGuard from "../util/withGuard";
 
 const CheckingOrders = () => {
   const { mobileSize} = useContext(AllStateContext);
@@ -19,4 +20,4 @@ const CheckingOrders = () => {
   );
 };
 
-export default CheckingOrders;
+export default withGuard(CheckingOrders);

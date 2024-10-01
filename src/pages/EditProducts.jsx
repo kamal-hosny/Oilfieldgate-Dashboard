@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import withGuard from "../util/withGuard";
 
 
 const EditProducts = () => {
@@ -295,4 +296,4 @@ const EditProducts = () => {
   );
 };
 
-export default EditProducts;
+export default withGuard(EditProducts);

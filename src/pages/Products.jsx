@@ -10,6 +10,7 @@ import { Button } from "@material-tailwind/react";
 import XlsxProducts from "../components/products/XlsxProducts";
 import { debounce } from "lodash";
 import { AllStateContext } from "../context/AllStateContext";
+import withGuard from "../util/withGuard";
 
 const Products = () => {
   const { pageNumber, setPageNumber } = useContext(AllStateContext);
@@ -97,4 +98,4 @@ const Products = () => {
   );
 };
 
-export default React.memo(Products);
+export default withGuard(React.memo(Products));

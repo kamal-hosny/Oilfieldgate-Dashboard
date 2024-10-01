@@ -1,21 +1,42 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import adminToken, { axiosConfig } from "../../../services/axiosConfig";
+import { axiosConfig } from "../../../services/axiosConfig";
+import Cookies from "js-cookie";
+
+// Safely handle the auth cookie
+let token;
+const authCookie = Cookies.get('auth');
+
+if (authCookie) {
+  try {
+    token = JSON.parse(authCookie).token;
+  } catch (error) {
+    console.error("Error parsing auth cookie:", error);
+    token = null; // Handle invalid token
+  }
+} else {
+  console.error("Auth cookie is not available.");
+  token = null; // Handle missing cookie
+}
 
 export const createOrder = createAsyncThunk(
-    "orders/createOrder",
-    async (data, thunkApi) => {
-        try {
-            const response = await axiosConfig.post(`order`, data, {
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8" ,
-                    token: adminToken
-                },
-            });
-            return response.data;
-        } catch (error) {
-            const message =
-                error.response?.data || error.message || "An unknown error";
-            return thunkApi.rejectWithValue(message);
-        }
+  "orders/createOrder",
+  async (data, thunkApi) => {
+    if (!token) {
+      return thunkApi.rejectWithValue("Authentication token is missing or invalid");
     }
+
+    try {
+      const response = await axiosConfig.post("order", data, {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          token: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data || error.message || "An unknown error";
+      return thunkApi.rejectWithValue(message);
+    }
+  }
 );
