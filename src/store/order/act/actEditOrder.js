@@ -2,27 +2,27 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosConfig } from "../../../services/axiosConfig";
 import Cookies from "js-cookie";
 
-// Safely handle the auth cookie
-let token;
-const authCookie = Cookies.get('auth');
-
-if (authCookie) {
-  try {
-    token = JSON.parse(authCookie).token;
-  } catch (error) {
-    console.error("Error parsing auth cookie:", error);
-    token = null; // Handle invalid token
-  }
-}
 
 export const editOrder = createAsyncThunk(
   "orders/editOrder",
   async (data, thunkApi) => {
-    console.log(data);
+    
+    // 
+    let token;
+    const authCookie = Cookies.get('auth')
 
-    if (!token) {
+    if (auth) {
+      try {
+        token = JSON.parse(authCookie).token;
+      } catch (error) {
+        console.error("Error parsing auth cookie:", error);
+        return thunkApi.rejectWithValue("Invalid auth cookie");
+      }
+    }else {
+      console.error("Auth cookie is not available.");
       return thunkApi.rejectWithValue("Authentication token is missing or invalid");
     }
+
 
     try {
       const response = await axiosConfig.put(`order/data/${data._id}`, data, {
