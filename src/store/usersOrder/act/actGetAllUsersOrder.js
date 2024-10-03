@@ -5,10 +5,9 @@ import Cookies from "js-cookie";
 export const getAllUsersOrders = createAsyncThunk(
   "UsersOrder/getAllUsersOrders",
   async (data, thunkApi) => {
-
-    // 
+    //
     let token;
-    const authCookie = Cookies.get('auth');
+    const authCookie = Cookies.get("auth");
 
     if (authCookie) {
       try {
@@ -19,21 +18,22 @@ export const getAllUsersOrders = createAsyncThunk(
       }
     } else {
       console.error("Auth cookie is not available.");
-      return thunkApi.rejectWithValue("Authentication token is missing or invalid");
+      return thunkApi.rejectWithValue(
+        "Authentication token is missing or invalid"
+      );
     }
 
-
-    
     try {
       const response = await axiosConfig.post("order/user", data, {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-          "token": token
-      }
+          token: token,
+        },
       });
       return response.data;
     } catch (error) {
-      const message = error.response?.data || error.message || "An unknown error occurred";
+      const message =
+        error.response?.data || error.message || "An unknown error occurred";
       return thunkApi.rejectWithValue(message);
     }
   }

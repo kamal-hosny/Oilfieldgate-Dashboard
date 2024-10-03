@@ -10,9 +10,6 @@ const DeleteProduct = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state?.modal || {});
 
-
-  console.log(product);
-
   const confirmLog = useCallback((e) => {
     e.preventDefault();
     if (!product?._id) {
@@ -23,8 +20,9 @@ const DeleteProduct = () => {
     dispatch(deleteProduct(product._id))
       .unwrap()
       .then(() => {
-        dispatch(getAllProducts());
         toast.success("Product deleted successfully!");
+        // Fetch updated product list after deletion
+        dispatch(getAllProducts());
       })
       .catch((error) => {
         console.error("Error deleting product:", error);

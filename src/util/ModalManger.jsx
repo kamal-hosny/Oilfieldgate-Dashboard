@@ -14,6 +14,8 @@ import DeleteOrder from "../components/modalDialog/DeleteOrder";
 import EditOrder from "../components/modalDialog/EditOrder";
 import RemoveOrderProduct from "../components/modalDialog/RemoveOrderProduct";
 import AddProduct from "../components/modalDialog/AddProduct";
+import CreateUserOrderModal from "../components/modalDialog/CreateUserOrderModal";
+import CreateNewRequest from "../components/modalDialog/CreateNewRequest";
 
 const ModalManager = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,9 @@ const ModalManager = () => {
     DeleteOrder,
     EditOrder,
     RemoveOrderProduct,
-    AddProduct
+    AddProduct,
+    CreateUserOrderModal,
+    CreateNewRequest
   };
   let renderComponent;
 

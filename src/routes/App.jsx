@@ -37,7 +37,7 @@ function App() {
           element: <CreateProducts />,
         },
         {
-          path: 'products/edit',
+          path: 'products/edit/:id?',
           element: <EditProducts />,
         },
         {

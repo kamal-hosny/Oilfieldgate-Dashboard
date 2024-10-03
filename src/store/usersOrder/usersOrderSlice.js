@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deleteOrderUserOrder } from "./act/actDeleteOrderUserOrder";
 import { getAllUsersOrders } from "./act/actGetAllUsersOrder";
 import { getUserOrders } from "./act/actGetUserOrders";
+import { createUsersOrder } from "./act/actCreateUsersOrder";
 
 const initialState = {
     records: [],
@@ -28,6 +29,25 @@ const getAllUsersOrderSlice = createSlice({
             state.loading = false;
             state.error = action.payload || action.error.message;
         })
+        // createUsersOrder
+        .addCase(createUsersOrder.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(createUsersOrder.fulfilled, (state, action) => {
+            state.loading = false;
+            if (Array.isArray(state.records)) {
+                state.records.push(action.payload);
+            } else {
+                state.records = [action.payload];
+            }
+        })
+        .addCase(createUsersOrder.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload || action.error.message;
+        })
+        
+
         // getUserOrders
         .addCase(getUserOrders.pending, (state) => {
             state.loading = true;

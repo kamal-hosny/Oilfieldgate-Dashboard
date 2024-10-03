@@ -11,6 +11,9 @@ import getAllOrderCartSlice from "../store/orderCart/orderCartSlice";
 import getAllOrdersSlice from "../store/order/orderSlice";
 import { postLoginAuthSliceReducer } from "../store/login/loginAuthSlice";
 import cloneOrderProductSlice from "../store/cloneOrderProduct/cloneOrderProductSlice";
+import getMainImgSlice from "../store/productCreateMainImg/productCreateMainImgSlice"
+import getImgsSlice from "../store/productCreateImgs/productCreateImgsSlice"
+
 export const store = configureStore({
     reducer: {
         modal,
@@ -25,5 +28,7 @@ export const store = configureStore({
         AllOrderCart: getAllOrderCartSlice,
         AllOrders: getAllOrdersSlice,
         cloneOrderProduct: cloneOrderProductSlice,
+        createProductMainImg: getMainImgSlice,
+        createProductAllImgs: getImgsSlice
     },
 });

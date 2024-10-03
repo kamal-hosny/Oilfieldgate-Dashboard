@@ -5,7 +5,7 @@ export const getOneProduct = createAsyncThunk(
     "products/getOneProduct", 
     async (id, thunkAPI) => {
         try {
-            const response = await axiosConfig.get(`api/products/${id}?populate=*`);
+            const response = await axiosConfig.get(`proudect/${id}?`);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data);

@@ -26,12 +26,12 @@ const cloneOrderProductSlice = createSlice({
       },
       addItem: (state, action) => {
         const newItem = action.payload;
-        if(!state.orderData) {
-          state.orderData = [newItem];
-        } else {
-          state.orderData.push(newItem);
+        if (!Array.isArray(state.orderData)) {
+          state.orderData = [];
         }
+        state.orderData.push(newItem);
       }
+      
     },
   });
   

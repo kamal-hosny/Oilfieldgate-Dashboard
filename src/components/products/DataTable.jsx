@@ -17,7 +17,11 @@ const DataTable = ({ productData }) => {
   // Clean data and transform API response to match your initialProductData structure
   const formatProductData = (apiData) => {
 
-    return apiData?.data?.map((item) => ({
+    // console.log(apiData.data[0]);
+
+    return apiData?.data?.map((item) =>{ 
+      // console.log();
+      return ({
       _id: item?._id,
       HNSCode: item.data?.HNS_code ? item.data.HNS_code.replace(/'/g, '') : '-', // Check if HNS_code exists
       productName: item.data?.product_name ? item.data.product_name.replace(/'/g, '') : '-', // Check if product_name exists
@@ -27,10 +31,10 @@ const DataTable = ({ productData }) => {
       dimension: item.data?.Dimension ? item.data.Dimension.replace(/'/g, '') : '-', // Check if Dimension exists
       unitOfMeasurement: item.data?.Unit_of_Measurement ? item.data.Unit_of_Measurement.replace(/'/g, '') : '-', // Check if Unit_of_Measurement exists
       condition: item.data?.condition ? item.data.condition.replace(/'/g, '') : '-', // Check if condition exists
-      categories: item.data?.Category ? [item.data.Category] : ['-'], // Check if Category exists
+      categories: item.data?.category ? [item.data.category] : ['-'], // Check if Category exists
       supplyAvailability: item.data?.instock || false, // Default to false if instock is undefined
-      images: item.imgs?.map((img) => img.url) || [], // Ensure image URLs are correct
-    }));
+      mainImg: item?.mainImg?.url 
+    })});
   };
   
 
@@ -81,17 +85,16 @@ const DataTable = ({ productData }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm">{product.categories.join(", ")}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">{product.supplyAvailability}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      {product.images.length > 0 && (
                         <img
-                          src={product.images[0] || "https://via.placeholder.com/50"}
+                          src={product?.mainImg || "https://via.placeholder.com/50"}
                           alt={`product-${product._id}`}
                           className="w-10 h-10 object-cover inline-block mr-2"
                         />
-                      )}
+
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <button
-                        onClick={() => navigate("/products/edit")}
+                        onClick={() => navigate(`/products/edit/${product._id}`)}
                         className="text-blue-600 hover:text-blue-900 mr-2 h-full"
                       >
                         Edit
