@@ -22,6 +22,7 @@ const TABLE_HEAD = [
 
 const TableOrderDetails = memo(({ orderData }) => {
 
+
   const dispatch = useDispatch()
 
   return (

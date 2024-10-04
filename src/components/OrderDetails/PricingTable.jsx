@@ -14,7 +14,7 @@ const PricingTable = React.memo(({ orderData }) => {
     return (
         <div className="flex flex-col gap-2 border-2 border-colorBorder">
             <p className="text-colorText1 p-3 bg-[#eceff1]">Pricing Table</p>
-            <div className="cards p-2 flex flex-col gap-2">
+            <div className="cards p-2 flex flex-col gap-2 text-xs">
                 {Array.isArray(orderData) && orderData.length > 0 ? (
                     orderData.map((x, index) => (
                         <div key={index} className="card text-sm flex justify-between">

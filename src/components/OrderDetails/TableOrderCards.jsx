@@ -15,6 +15,8 @@ const TABLE_HEAD = [
 ];
 
 const TableOrderCards = ({ orderData }) => {
+
+
   const dispatch = useDispatch();
 
   const handleUpdateQuantity = (id, newQuantity) => {

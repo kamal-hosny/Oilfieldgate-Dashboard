@@ -95,7 +95,7 @@ const OrderDetails = () => {
         <InformationOneOrderHeader orderData={OneOrderData} />
         <div className='p-4 grid gap-4 overflow-x-auto'>
           <TableOrderDetails orderData={OneOrderData} />
-          {OneOrderData?.cart?.length > 0 ? (
+          {CloneOrderData?.length > 0 ? (
             <div className='flex justify-between gap-2 lg:flex-row flex-col'>
               <span className='flex-[3]'>
                 <TableOrderCards orderData={CloneOrderData} />

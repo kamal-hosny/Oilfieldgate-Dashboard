@@ -67,9 +67,9 @@ const VerticalNavbar = () => {
                     </NavLink>
                 ) : (
                     <div
-                        onClick={item.event} 
+                        onClick={item.event}
                         className={`${openMenu ? "p-[15px] w-12" : "w-full"
-                        } flex items-center h-12 whitespace-nowrap gap-2 p-3 transition-all relative text-colorText2 rounded-lg my-1 sm:text-base text-xs hover:bg-sectionColor`}
+                            } flex items-center h-12 whitespace-nowrap gap-2 p-3 transition-all relative text-colorText2 rounded-lg my-1 sm:text-base text-xs hover:bg-sectionColor`}
                     >
                         {item.icon}
                         {!openMenu && <span>{item.title}</span>}
@@ -116,10 +116,9 @@ const VerticalNavbar = () => {
                     <div>
                         <p className={`text-sm font-semibold mb-2 transition-opacity duration-300 whitespace-nowrap ${openMenu ? "opacity-0" : "opacity-100"}`}>Account management</p>
                         <div
-                            className={`${
-                                openMenu ? "justify-center w-12" : "w-full" 
-                            } cursor-pointer flex items-center h-12 gap-2 p-3 transition-all whitespace-nowrap text-colorText2 sm:text-base text-xs rounded-lg my-1 hover:bg-colorBorder`}
-                         onClick={() => { dispatch(openModal("LogOut")); }}
+                            className={`${openMenu ? "justify-center w-12" : "w-full"
+                                } cursor-pointer flex items-center h-12 gap-2 p-3 transition-all whitespace-nowrap text-colorText2 sm:text-base text-xs rounded-lg my-1 hover:bg-colorBorder`}
+                            onClick={() => { dispatch(openModal("LogOut")); }}
                         >
                             <LogoutIcon fontSize="small" />
                             {!openMenu && <span>Log Out</span>}

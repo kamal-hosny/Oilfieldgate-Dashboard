@@ -105,6 +105,7 @@ const getAllProductsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+      
   },
 });
 

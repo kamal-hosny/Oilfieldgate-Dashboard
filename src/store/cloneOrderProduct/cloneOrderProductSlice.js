@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"; 
 
 const initialState = {
-    orderData: null, 
+    orderData: [], // تهيئة كـ مصفوفة فارغة بدلاً من null
 }
 
 const cloneOrderProductSlice = createSlice({
@@ -26,12 +26,12 @@ const cloneOrderProductSlice = createSlice({
       },
       addItem: (state, action) => {
         const newItem = action.payload;
-        if (!Array.isArray(state.orderData)) {
-          state.orderData = [];
+        // التأكد من أن المنتج الجديد غير موجود في orderData مسبقًا
+        const exists = state.orderData.some((item) => item._id === newItem._id);
+        if (!exists) {
+          state.orderData.push(newItem);
         }
-        state.orderData.push(newItem);
       }
-      
     },
   });
   

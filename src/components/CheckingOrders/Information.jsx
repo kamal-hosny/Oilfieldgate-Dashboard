@@ -17,15 +17,7 @@ const Information = () => {
   const { loading, error, recordsUserOrder } = useSelector(state => state?.allUsersOrder);
   const allUserOrders = recordsUserOrder?.data;
 
-  // Exit early if no ID is provided, preventing unnecessary loops
-  if (!id) {
-    return (
-      <div className="p-4 bg-sectionColor flex items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
-        Please select a customer's order to view the details.
-      </div>
-    );
-  }
-
+  // Hooks should not be conditionally skipped
   const fetchOneUser = useCallback(() => {
     if (id) {
       dispatch(getOneUser(id));
@@ -45,18 +37,28 @@ const Information = () => {
     }
   }, [fetchOneUser, fetchAllUserOrders, id]);
 
-  // Avoid infinite loop: Only refetch if the orders have never been fetched before
   useEffect(() => {
     if (Array.isArray(allUserOrders) && allUserOrders.length === 0 && recordsUserOrder?.fetched === false) {
       fetchAllUserOrders();
     }
   }, [allUserOrders, fetchAllUserOrders, recordsUserOrder]);
 
+  // Place the conditional return here to avoid skipping hooks
+  if (!id) {
+    return (
+      <div className="p-4 bg-sectionColor flex items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
+        Please select a customer's order to view the details.
+      </div>
+    );
+  }
+
   if (Array.isArray(allUserOrders) && allUserOrders.length === 0) {
     return (
       <div className="p-4 bg-sectionColor flex flex-col gap-4 items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
         No orders found for this user.
-        <Button className='rounded-md bg-mainColor hover:bg-mainColorHover' onClick={() => dispatch(openModal("CreateNewRequest"))}>Create a new request</Button>
+        <Button className='rounded-md bg-mainColor hover:bg-mainColorHover' onClick={() => dispatch(openModal("CreateNewRequest"))}>
+          Create a new request
+        </Button>
       </div>
     );
   }
