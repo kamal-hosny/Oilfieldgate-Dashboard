@@ -107,7 +107,14 @@ const TableOrderCards = ({ orderData }) => {
               <td className="px-3 py-2 border-b border-blue-gray-50">
                 {formatCurrency(x?.price * x?.Quantity) || "_"}
               </td>
-              <td className="px-3 py-2 h-full">
+              <td className="px-3 py-2 h-full space-x-4">
+                
+                <button
+                  className="text-green-600 hover:text-green-900"
+                  onClick={() => window.open(`https://ogwebsite-ea55a.web.app/productDetails/${x._id}`, '_blank')}
+                >
+                  View
+                </button>
                 <button
                   className="text-red-600 hover:text-red-900"
                   onClick={() => dispatch(openModal({ name: "RemoveOrderProduct", product: x._id }))}

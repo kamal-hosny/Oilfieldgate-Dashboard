@@ -11,6 +11,7 @@ import { createMainImg } from "../store/productCreateMainImg/act/actCreateMainIm
 import { createImgs } from "../store/productCreateImgs/act/actCreateImgs";
 import Loading from "../components/UI/Loading";
 import { useNavigate, useParams } from "react-router-dom";
+import { uploadPdfOneProducts } from "../store/products/act/acrEditPdfOneProducts";
 
 const CreateProducts = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,8 @@ const CreateProducts = () => {
 
   const onSubmit = async (data) => {
     try {
+      const pdfFile = data.document && data.document.length > 0 ? data.document[0] : singleProductData?.document;
+
       if (!images.length) {
         alert("Please upload at least one image.");
         return;
@@ -65,25 +68,51 @@ const CreateProducts = () => {
 
       const formData = new FormData();
       setLoading(true);
-      formData.append("product_name", data.productName);
-      formData.append("price", data.price);
-      formData.append("model_number", data.modelNumber);
-      formData.append("category", data.category);
-      formData.append("dimension", data.dimension);
-      formData.append("unit_of_measurement", data.unitOfMeasurement);
-      formData.append("condition", data.condition);
-      formData.append("brand", data.brand);
-      formData.append("weight", data.Weight);
-      formData.append("size", data.size);
-      formData.append("HNS_code", data.HNSCode);
-      formData.append("material_category", data.materialCategory);
-      formData.append("instock", data.instock);
-      formData.append("description", data.description);
-      formData.append("pdf", data.document[0]);
-      formData.append("currency", "AED");
+      // formData.append("product_name", data.productName);
+      // formData.append("price", data.price);
+      // formData.append("model_number", data.modelNumber);
+      // formData.append("category", data.category);
+      // formData.append("dimension", data.dimension);
+      // formData.append("unit_of_measurement", data.unitOfMeasurement);
+      // formData.append("condition", data.condition);
+      // formData.append("brand", data.brand);
+      // formData.append("weight", data.Weight);
+      // formData.append("size", data.size);
+      // formData.append("HNS_code", data.HNSCode);
+      // formData.append("material_category", data.materialCategory);
+      // formData.append("instock", data.instock);
+      // formData.append("description", data.description);
+      // formData.append("currency", "AED");
 
-      const response = await dispatch(createProduct(formData));
+      const productData = {
+        product_name: data.productName,
+        price: data.price,
+        model_number: data.modelNumber,
+        category: data.category,
+        Dimension: data.dimension,
+        Unit_of_Measurement: data.unitOfMeasurement,
+        condition: data.condition,
+        brand: data.brand,
+        weight: data.Weight,
+        size: data.size,
+        HNS_code: data.HNSCode,
+        material_Category: data.materialCategory,
+        instock: data.instock,
+        Description: data.description,
+        Currency: "AED",
+
+
+      }
+
+
+      const response = await dispatch(
+        createProduct(productData)
+        );
+
+
       const { insertedId } = response?.payload?.data;
+
+        console.log(insertedId);
 
       if (!insertedId) {
         throw new Error("Failed to insert product data.");
@@ -100,6 +129,19 @@ const CreateProducts = () => {
           })
         );
       }
+
+
+          // رفع ملف الـ PDF إذا تم تحميله، أو استخدام الملف السابق
+    if (pdfFile) {
+      const formDataPdf = new FormData();
+      formDataPdf.append("file", pdfFile);
+    
+      await dispatch(uploadPdfOneProducts({
+        _id: insertedId,
+        pdf: pdfFile, // لا داعي لاستدعاء formData.get()
+      }));
+    }
+
 
       for (const image of images) {
         const formDataImg = new FormData();
@@ -353,9 +395,7 @@ const CreateProducts = () => {
             <div className="flex flex-col gap-1 col-span-6">
               <label className="text-colorText1">Add PDF Document:</label>
               <input
-                {...register("document", {
-                  required: "Please upload a PDF document",
-                })}
+                {...register("document")}
                 type="file"
                 accept=".pdf" // Ensure only PDFs are uploaded
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
@@ -466,7 +506,7 @@ const CreateProducts = () => {
         </div>
 
         <div className="flex justify-end gap-4 items-center">
-          <button className="bg-gray-600 text-white p-2 rounded-md">
+          <button className="bg-gray-600 text-white p-2 rounded-md" onClick={()=> {navigate('/products');}}>
             Cancel
           </button>
           <button

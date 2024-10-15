@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import { AllStateContext } from "../../context/AllStateContext";
 import TuneIcon from '@mui/icons-material/Tune';
-import logo from "../../assets/logo/facebook_profile_image_on_corporate_by_logaster.png";
+import logo from "../../assets/logo/logo.png";
 import { NavLink } from "react-router-dom";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -17,7 +17,6 @@ const VerticalNavbar = () => {
     const { mobileSize, openMenu, changeMenuValue } = useContext(AllStateContext);
 
     const handleCreateUserOrderClick = () => {
-        console.log("Create User Order clicked");
         dispatch(openModal("CreateUserOrderModal"));
     };
 

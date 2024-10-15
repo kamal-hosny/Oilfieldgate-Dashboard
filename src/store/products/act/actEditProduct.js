@@ -27,6 +27,7 @@ export const editProduct = createAsyncThunk(
         try {
             const response = await axiosConfig.put(`proudect/update/data/${data._id}`, data.product, {
                 headers: {
+                    "Content-type": "application/json; charset=UTF-8",
                     token: token,
                 }
             })

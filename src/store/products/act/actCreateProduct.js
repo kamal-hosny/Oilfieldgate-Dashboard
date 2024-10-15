@@ -26,6 +26,7 @@ export const createProduct = createAsyncThunk(
         try {
             const response = await axiosConfig.post("proudect", data, {
                 headers: {
+                    "Content-type": "application/json; charset=UTF-8",
                     token: token,
             }
             })

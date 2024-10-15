@@ -4,7 +4,7 @@ import Information from './Information';
 
 const FullSizeCheckingOrders = () => {
   return (
-    <div className="grid grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 gap-2">
       <div className="col-span-2 lg:col-span-1" style={{ height: "calc(100vh - 115px)" }}>
         <Orders />
       </div>

@@ -125,7 +125,8 @@ const AddProduct = React.memo(() => {
                       {product?.data?.instock ? `In Stock: ${product?.data?.instock}` : "Out of Stock"}
                     </div>
                     <div className="flex gap-2 justify-center mt-2">
-                      <Button className="p-2 rounded-sm">
+                      
+                      <Button onClick={() => window.open(`https://ogwebsite-ea55a.web.app/productDetails/${product?._id}`, '_blank')} className="p-2 rounded-sm">
                         view
                       </Button>
                       <Button className="p-2 rounded-sm" onClick={() => { addProductToCart(product) }}>

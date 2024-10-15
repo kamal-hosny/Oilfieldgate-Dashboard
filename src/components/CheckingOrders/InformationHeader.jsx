@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../../store/modal/modalSlice";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import PauseIcon from '@mui/icons-material/Pause';
 
 const InformationHeader = ({ userData, allUserOrders }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,15 @@ const InformationHeader = ({ userData, allUserOrders }) => {
         </span>
       </div>
       <span className="text-colorText1 flex gap-2 font-bold">
+        <Button
+          data-tooltip-id="create-request"
+          data-tooltip-content="Track all orders"
+          onClick={() => dispatch(openModal("UserOrderChangeStatus"))}
+          className="bg-purple-600 hover:bg-purple-700 rounded-lg p-2"
+        >
+          <PauseIcon />
+        </Button>
+        
         <Button
           data-tooltip-id="create-request"
           data-tooltip-content="Create a new request"

@@ -1,15 +1,19 @@
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
-import withGuard from "../util/withGuard";
 import ImageUploading from "react-images-uploading";
-import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneProduct } from "../store/products/act/actGetOneProduct";
-import Loading from "../components/UI/Loading";
-import { editProduct } from "../store/products/act/actEditProduct";
+import Select from "react-select";
 import { toast } from "react-toastify";
+import Loading from "../components/UI/Loading";
+import { createImgs } from "../store/productCreateImgs/act/actCreateImgs";
+import { createMainImg } from "../store/productCreateMainImg/act/actCreateMainImg";
+import { editProduct } from "../store/products/act/actEditProduct";
+import { getOneProduct } from "../store/products/act/actGetOneProduct";
+import withGuard from "../util/withGuard";
+import { uploadPdfOneProducts } from "../store/products/act/acrEditPdfOneProducts";
+import { putRemoveImgsProducts } from "../store/products/act/actPutRemoveImgsProducts";
 
 
 const EditProducts = () => {
@@ -23,9 +27,6 @@ const EditProducts = () => {
     watch,
     formState: { errors },
   } = useForm();
-
-  console.log(id);
-
   const { record, loading, error } = useSelector((state) => state?.allProducts);
   const singleProductData = record?.data;
 
@@ -43,69 +44,57 @@ const EditProducts = () => {
       const product = singleProductData.data;
 
 
-      setValue("productName", product?.product_name || "");
-      setValue("price", product?.price || "");
-      setValue("modelNumber", product?.model_number || "");
-      setValue("instock", product?.instock || "");
-      setValue("HNSCode", product?.HNS_code || "");
-      setValue("dimension", product?.dimension || "");
-      setValue("Weight", product?.weight || "");
-      setValue("size", product?.size || "");
-      setValue("unitOfMeasurement", product?.unit_of_measurement || "");
-      setValue("description", product?.description || "");
-      setValue("document", product?.document || "")
-      setMainImage(singleProductData?.mainImg?.url)
-      setSentMainImage(singleProductData?.imgs)
-      console.log(singleProductData?.imgs);
-
-      setImages(singleProductData?.imgs)
 
       if (product) {
-        setValue("materialCategory", {
-          label: product?.material_category,
-          value: product?.material_category,
-        });
-        setValue("category", {
-          label: product?.category,
-          value: product?.category,
-        });
-        setValue("brand", {
-          label: product?.brand,
-          value: product?.brand,
-        });
-        setValue("condition", {
-          label: product?.condition,
-          value: product?.condition,
-        });
+        setValue("productName", product?.product_name || "");
+        setValue("price", product?.price || "");
+        setValue("modelNumber", product?.model_number || "");
+        setValue("instock", product?.instock || "");
+        setValue("HNSCode", product?.HNS_code || "");
+        setValue("dimension", product?.Dimension || "");
+        setValue("Weight", product?.weight || "");
+        setValue("size", product?.size || "");
+        setValue("unitOfMeasurement", product?.Unit_of_Measurement || "");
+        setValue("description", product?.Description || "");
+        setValue("document", product?.document || "");
+        setMainImage(singleProductData?.mainImg?.url);
+        setSentMainImage(singleProductData?.imgs);
+        setImages(singleProductData?.imgs);
+        setValue("materialCategory", product?.material_Category);
+        setValue("category", product?.category);
+        setValue("brand", product?.brand);
+        setValue("condition", product?.condition);
+
       }
     }
   }, [singleProductData, setValue]);
 
   const valueMaterialCategory = useSelector((state) =>
     state?.allMaterialCategories?.records?.data?.map((item) => ({
-      label: item.name || "Default Label",
-      value: item.name || "default_value",
+      label: item?.name || "Default Label",
+      value: item?.name || "default_value",
     }))
   );
 
+
   const valueCategory = useSelector((state) =>
     state?.allCategories?.records?.data?.map((item) => ({
-      label: item.name || "Default Label",
-      value: item.name || "default_value",
+      label: item?.name || "Default Label",
+      value: item?.name || "default_value",
     }))
   );
 
   const valueBrand = useSelector((state) =>
-    state?.allBrands?.records?.data?.map((item) => ({
-      label: item.name || "Default Label",
-      value: item.name || "default_value",
-    }))
-  );
+  state?.allBrands?.records?.data?.map((item) => ({
+    label: item?.name || "Default Label",
+    value: item?.name || "default_value", // Ensure proper value fallback
+  }))
+);
 
   const valueCondition = useSelector((state) =>
     state?.allConditions?.records?.data?.map((item) => ({
-      label: item.name || "Default Label",
-      value: item.name || "default_value",
+      label: item?.name || "Default Label",
+      value: item?.name || "default_value",
     }))
   );
 
@@ -113,74 +102,74 @@ const EditProducts = () => {
   const [mainImage, setMainImage] = useState(null);
   const [sentMainImage, setSentMainImage] = useState(null);
 
-console.log(sentMainImage);
-
   const maxNumber = 10;
 
   const onSubmit = async (data) => {
+
+    console.log(data);
+
     try {
-      if (!images.length) {
-        alert("Please upload at least one image.");
-        return;
-      }
 
-      if (!data.document || data.document.length === 0) {
-        alert("Please upload a PDF document.");
-        return;
-      }
+      const pdfFile = data.document && data.document.length > 0 ? data.document[0] : singleProductData?.document;
 
-      const formData = new FormData();
-      // setLoading(true);
-      formData.append("product_name", data.productName);
-      formData.append("price", data.price);
-      formData.append("model_number", data.modelNumber);
-      formData.append("category", data.category);
-      formData.append("dimension", data.dimension);
-      formData.append("unit_of_measurement", data.unitOfMeasurement);
-      formData.append("condition", data.condition);
-      formData.append("brand", data.brand);
-      formData.append("weight", data.Weight);
-      formData.append("size", data.size);
-      formData.append("HNS_code", data.HNSCode);
-      formData.append("material_category", data.materialCategory);
-      formData.append("instock", data.instock);
-      formData.append("description", data.description);
-      formData.append("pdf", data.document[0]);
-      formData.append("currency", "AED");
+const productData = {
+    product_name: data.productName,
+    price: data.price,
+    model_number: data.modelNumber,
+    category: data.category,
+    Dimension: data.dimension,
+    Unit_of_Measurement: data.unitOfMeasurement,
+    condition: data.condition,
+    brand: data.brand,
+    weight: data.Weight,
+    size: data.size,
+    HNS_code: data.HNSCode,
+    material_Category: data.materialCategory,
+    instock: data.instock,
+    Description: data.description,
+    Currency: "AED"
+};
 
-       await dispatch(editProduct({
-        _id: id,
-        product: formData
-      }));
+await dispatch(editProduct({
+    _id: id,
+    product: productData
+}));
 
 
       if (sentMainImage) {
         const formDataMainImg = new FormData();
         formDataMainImg.append("main_img", sentMainImage);
 
-        await dispatch(
-          createMainImg({
-            id: insertedId,
-            mainImg: formDataMainImg,
-          })
-        );
+        await dispatch(createMainImg({
+          id: id,
+          mainImg: formDataMainImg,
+        }));
       }
+
+    // رفع ملف الـ PDF إذا تم تحميله، أو استخدام الملف السابق
+    if (pdfFile) {
+      const formDataPdf = new FormData();
+      formDataPdf.append("file", pdfFile);
+    
+      await dispatch(uploadPdfOneProducts({
+        _id: id,
+        pdf: pdfFile, // لا داعي لاستدعاء formData.get()
+      }));
+    }
+
 
       for (const image of images) {
         const formDataImg = new FormData();
         formDataImg.append("imgs", image.file);
 
-        await dispatch(
-          createImgs({
-            id: insertedId,
-            imgs: formDataImg,
-          })
-        );
+        await dispatch(createImgs({
+          id: id,
+          imgs: formDataImg,
+        }));
       }
 
       toast.success("Product and images uploaded successfully!");
       navigate('/products');
-      
     } catch (error) {
       console.error(error);
       toast.error(error.message || "Failed to create product or upload images.");
@@ -207,6 +196,17 @@ console.log(sentMainImage);
       }
     };
   }, [mainImage]);
+  
+
+  const handleRemoveImgsAPI = (publicid) => {
+    dispatch(putRemoveImgsProducts({
+      _id: id ,
+      publicid: publicid
+    }))
+
+  }
+
+
 
   return (
     <Loading loading={loading} error={error} classStyle={"h-[500px]"} className={""} >
@@ -295,8 +295,11 @@ console.log(sentMainImage);
                 options={valueMaterialCategory} // Options from state
                 isClearable
                 isSearchable
-                value={watch("materialCategory")} // Set the value from the form's watch function
-                onChange={(selected) => setValue("materialCategory", selected)}
+                value={valueMaterialCategory?.find(option => option.value === watch("materialCategory")) || null}
+                onChange={(selected) => setValue("materialCategory", selected?.value || null)} 
+
+
+                
               />
               {errors.materialCategory && (
                 <span className="text-red-500">This field is required</span>
@@ -311,8 +314,9 @@ console.log(sentMainImage);
                 options={valueCategory}
                 isClearable
                 isSearchable
-                value={watch("category")}
-                onChange={(selected) => setValue("category", selected)}
+                value={valueCategory?.find(option => option.value === watch("category")) || null}
+                onChange={(selected) => setValue("category", selected?.value || null)}
+                
               />
               {errors.category && (
                 <span className="text-red-500">This field is required</span>
@@ -327,8 +331,8 @@ console.log(sentMainImage);
                 options={valueBrand}
                 isClearable
                 isSearchable
-                value={watch("brand")}
-                onChange={(selected) => setValue("brand", selected)}
+                value={valueBrand?.find(option => option.value === watch("brand")) || null}
+                onChange={(selected) => setValue("brand", selected?.value || null)} 
               />
               {errors.brand && (
                 <span className="text-red-500">This field is required</span>
@@ -343,8 +347,9 @@ console.log(sentMainImage);
                 options={valueCondition}
                 isClearable
                 isSearchable
-                value={watch("condition")}
-                onChange={(selected) => setValue("condition", selected)}
+                value={valueCondition?.find(option => option.value === watch("condition")) || null}
+                onChange={(selected) => setValue("condition", selected?.value || null)} 
+
               />
               {errors.condition && (
                 <span className="text-red-500">This field is required</span>
@@ -418,9 +423,7 @@ console.log(sentMainImage);
             <div className="flex flex-col gap-1 col-span-6">
               <label className="text-colorText1">Add PDF Document:</label>
               <input
-                {...register("document", {
-                  required: "Please upload a PDF document",
-                })}
+                {...register("document")}
                 type="file"
                 accept=".pdf" // Ensure only PDFs are uploaded
                 className="border-colorBorder border-2 p-2 w-full focus:outline-mainColorHover"
@@ -502,28 +505,30 @@ console.log(sentMainImage);
                       </div>
                     </button>
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {imageList.map((image, index) => (
-                        <div key={index} className="image relative w-24 h-24">
-                          <img
-                            src={image.data_url || image.url}
-                            alt={`mainImage ${index}`}
-                            className="w-24 h-24 object-cover"
-                          />
-                          <div
-                            className="cursor-pointer absolute z-[2] top-1 left-1 rounded-full p-0.5 bg-[#ffffff67]"
-                            onClick={() => onImageRemove(index)}
-                          >
-                            <span className="text-[#616161] hover:text-red-700 transition-all flex items-center justify-center">
-                              <CloseIcon fontSize="small" />
-                            </span>
+                      {imageList.map((image, index) => {
+                        return(
+                          <div key={index} className="image relative w-24 h-24">
+                            <img
+                              src={image.data_url || image.url}
+                              alt={`mainImage ${index}`}
+                              className="w-24 h-24 object-cover"
+                            />
+                            <div
+                              className="cursor-pointer absolute z-[2] top-1 left-1 rounded-full p-0.5 bg-[#ffffff67]"
+                              onClick={() => {
+                                onImageRemove(index)
+                                handleRemoveImgsAPI(image.publicid)
+                              }}
+                            >
+                              <span className="text-[#616161] hover:text-red-700 transition-all flex items-center justify-center">
+                                <CloseIcon fontSize="small" />
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                       
                       
-
-
-
 
 
 
@@ -542,7 +547,7 @@ console.log(sentMainImage);
         </div>
 
         <div className="flex justify-end gap-4 items-center">
-          <button className="bg-gray-600 text-white p-2 rounded-md">
+        <button className="bg-gray-600 text-white p-2 rounded-md" onClick={()=> {navigate('/products');}}>
             Cancel
           </button>
           <button

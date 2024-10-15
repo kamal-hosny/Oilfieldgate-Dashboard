@@ -3,10 +3,13 @@ import { deleteOrderUserOrder } from "./act/actDeleteOrderUserOrder";
 import { getAllUsersOrders } from "./act/actGetAllUsersOrder";
 import { getUserOrders } from "./act/actGetUserOrders";
 import { createUsersOrder } from "./act/actCreateUsersOrder";
+import { updateStatusUserOrder } from "./act/actUpdateStatusUserOrder";
+import { deleteUserOrder } from "./act/actDeleteUserOrder";
 
 const initialState = {
     records: [],
     recordsUserOrder: [], 
+    recordStatusUserOrder: "",
     loading: false,
     error: null
 };
@@ -46,7 +49,30 @@ const getAllUsersOrderSlice = createSlice({
             state.loading = false;
             state.error = action.payload || action.error.message;
         })
-        
+        //deleteUserOrder
+
+        .addCase(deleteUserOrder.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(deleteUserOrder.fulfilled, (state, action) => {
+            state.loading = false;
+            
+            if (Array.isArray(state.records)) {
+                state.records = state.records.filter(
+                    (el) => el._id !== action.payload
+                );
+            }
+        })
+
+        .addCase(deleteUserOrder.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload || action.error.message;
+        })
+
+
+
+
 
         // getUserOrders
         .addCase(getUserOrders.pending, (state) => {
@@ -76,6 +102,19 @@ const getAllUsersOrderSlice = createSlice({
             }
         })
         .addCase(deleteOrderUserOrder.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload || action.error.message;
+        })
+        // updateStatusUserOrder
+        .addCase(updateStatusUserOrder.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(updateStatusUserOrder.fulfilled, (state, action) => {
+            state.loading = false;
+            state.recordStatusUserOrder = action.payload;
+        })
+        .addCase(updateStatusUserOrder.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload || action.error.message;
         });

@@ -77,7 +77,7 @@ const CreateSpecific = () => {
 
   return (
     <Loading classStyle="h-screen" className="" loading={loading} error={error} >
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col h-screen gap-4">
       <h1>All Specific</h1>
       <div className="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <CardContent title="Category" items={allCategories || []} />

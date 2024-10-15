@@ -56,9 +56,14 @@ const Information = () => {
     return (
       <div className="p-4 bg-sectionColor flex flex-col gap-4 items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
         No orders found for this user.
+        <span className='flex gap-0 space-x-4'>
         <Button className='rounded-md bg-mainColor hover:bg-mainColorHover' onClick={() => dispatch(openModal("CreateNewRequest"))}>
           Create a new request
         </Button>
+        <Button className='rounded-md bg-red-700 hover:bg-red-900 ' onClick={() => dispatch(openModal("DeleteRequest"))}>
+          Delete the request
+        </Button>
+        </span>
       </div>
     );
   }

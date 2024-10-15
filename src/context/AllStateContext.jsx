@@ -7,6 +7,10 @@ const AllStateProvider = ({ children }) => {
     const [mobileSize, setMobileSize] = useState(window.innerWidth < 768);
     const [pageNumber, setPageNumber] = useState(1);
 
+//
+const [localOrders, setLocalOrders] = useState([]); // local state to store orders
+
+
     useEffect(() => {
         const handleResize = () => {
             setMobileSize(window.innerWidth < 768);
@@ -28,8 +32,11 @@ const AllStateProvider = ({ children }) => {
         changeMenuValue,
         pageNumber,
         setPageNumber,
-        mobileSize
-    }), [openMenu, mobileSize, pageNumber]);
+        mobileSize,
+        localOrders,
+        setLocalOrders
+
+    }), [openMenu, mobileSize, pageNumber, localOrders]);
 
     return (
         <AllStateContext.Provider value={contextValue}>

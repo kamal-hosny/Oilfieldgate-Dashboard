@@ -60,6 +60,7 @@ const Products = () => {
   const meta = productData?.records?.meta;
 
   return (
+    <div className="grid h-[1000px]">
     <div className="flex flex-col gap-4">
       <div className="title text-lg font-semibold text-colorText1">Products</div>
       <div className="flex flex-col gap-4">
@@ -94,6 +95,7 @@ const Products = () => {
         </select>
       </div>
       <DataTable productData={productData} />
+    </div>
     </div>
   );
 };

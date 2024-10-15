@@ -5,6 +5,7 @@ import { closeModal } from "../../store/modal/modalSlice";
 import { createUsersOrder } from "../../store/usersOrder/act/actCreateUsersOrder";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { getAllUsersOrders } from "../../store/usersOrder/act/actGetAllUsersOrder";
 
 const CreateUserOrderModal = React.memo(() => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const CreateUserOrderModal = React.memo(() => {
       .unwrap()
       .then(() => {
         dispatch(closeModal());
+        dispatch(getAllUsersOrders());
         toast.success("User created successfully");
 
       })
