@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { openModal } from '../../store/modal/modalSlice';
 import Loading from '../UI/Loading';
 
-const DataTable = ({ productData }) => {
+const DataTable = ({ productData , meta , currentPage, limit }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ const DataTable = ({ productData }) => {
     });
   };
 
-
   // Use formatted data
   const [Data, setData] = useState([]);
 
@@ -46,6 +45,9 @@ const DataTable = ({ productData }) => {
     }
   }, [records]);
 
+    const startIndex = (meta?.page - 1) * meta?.limit + 1;
+
+
   return (
     <Loading loading={loading} error={error} >
       <div className="flex flex-col w-full relative">
@@ -55,6 +57,7 @@ const DataTable = ({ productData }) => {
               <table className="min-w-full divide-y divide-colorText2 text-center ">
                 <thead className="text-colorText2 text-xs font-medium">
                   <tr>
+                    <th scope="col" className="px-6 py-3 text-center">#</th>
                     <th scope="col" className="px-6 py-3 text-center">HNSCode</th>
                     <th scope="col" className="px-6 py-3 text-center">Product Name</th>
                     <th scope="col" className="px-6 py-3 text-center">Price</th>
@@ -70,8 +73,9 @@ const DataTable = ({ productData }) => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-colorText2 text-colorText1">
-                  {Data?.map((product) => (
+                  {Data?.map((product, index) => (
                     <tr key={product._id} className="hover:bg-sectionColorHover">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">{index + startIndex}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">{product.HNSCode}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{product.productName}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">{product.price}</td>

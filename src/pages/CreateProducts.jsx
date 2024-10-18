@@ -54,17 +54,18 @@ const CreateProducts = () => {
 
   const onSubmit = async (data) => {
     try {
-      const pdfFile = data.document && data.document.length > 0 ? data.document[0] : singleProductData?.document;
+      const pdfFile = data.document && data.document.length > 0 ? data.document[0] : null;
 
-      if (!images.length) {
-        alert("Please upload at least one image.");
-        return;
-      }
 
-      if (!data.document || data.document.length === 0) {
-        alert("Please upload a PDF document.");
-        return;
-      }
+      // if (!images.length) {
+      //   alert("Please upload at least one image.");
+      //   return;
+      // }
+
+      // if (!data.document || data.document.length === 0) {
+      //   alert("Please upload a PDF document.");
+      //   return;
+      // }
 
       const formData = new FormData();
       setLoading(true);

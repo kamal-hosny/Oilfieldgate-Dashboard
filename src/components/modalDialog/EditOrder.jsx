@@ -17,7 +17,7 @@ const EditOrder = () => {
 
     const data = useSelector((state) => state?.modal?.product);
 
-    
+
     // Distribute data values to form fields
     useEffect(() => {
         if (data) {

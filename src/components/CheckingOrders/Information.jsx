@@ -17,7 +17,6 @@ const Information = () => {
   const { loading, error, recordsUserOrder } = useSelector(state => state?.allUsersOrder);
   const allUserOrders = recordsUserOrder?.data;
 
-  // Hooks should not be conditionally skipped
   const fetchOneUser = useCallback(() => {
     if (id) {
       dispatch(getOneUser(id));
@@ -43,7 +42,7 @@ const Information = () => {
     }
   }, [allUserOrders, fetchAllUserOrders, recordsUserOrder]);
 
-  // Place the conditional return here to avoid skipping hooks
+  // If there is no id in params, return a message
   if (!id) {
     return (
       <div className="p-4 bg-sectionColor flex items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
@@ -52,17 +51,19 @@ const Information = () => {
     );
   }
 
+
+  // Conditional rendering for when there are no orders found
   if (Array.isArray(allUserOrders) && allUserOrders.length === 0) {
     return (
       <div className="p-4 bg-sectionColor flex flex-col gap-4 items-center justify-center overflow-x-auto" style={{ height: 'calc(100vh - 115px)' }}>
         No orders found for this user.
         <span className='flex gap-0 space-x-4'>
-        <Button className='rounded-md bg-mainColor hover:bg-mainColorHover' onClick={() => dispatch(openModal("CreateNewRequest"))}>
-          Create a new request
-        </Button>
-        <Button className='rounded-md bg-red-700 hover:bg-red-900 ' onClick={() => dispatch(openModal("DeleteRequest"))}>
-          Delete the request
-        </Button>
+          <Button className='rounded-md bg-mainColor hover:bg-mainColorHover' onClick={() => dispatch(openModal("CreateNewRequest"))}>
+            Create a new request
+          </Button>
+          <Button className='rounded-md bg-red-700 hover:bg-red-900 ' onClick={() => dispatch(openModal("DeleteRequest"))}>
+            Delete the request
+          </Button>
         </span>
       </div>
     );

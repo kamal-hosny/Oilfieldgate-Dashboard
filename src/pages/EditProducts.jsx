@@ -101,12 +101,13 @@ const EditProducts = () => {
   const [images, setImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
   const [sentMainImage, setSentMainImage] = useState(null);
+  const [loading2, setLoading2] = useState(false);
 
   const maxNumber = 10;
 
   const onSubmit = async (data) => {
-
-    console.log(data);
+    setLoading2(true)
+    // console.log(data);
 
     try {
 
@@ -169,8 +170,10 @@ await dispatch(editProduct({
       }
 
       toast.success("Product and images uploaded successfully!");
+      setLoading2(false)
       navigate('/products');
     } catch (error) {
+      setLoading2(false)
       console.error(error);
       toast.error(error.message || "Failed to create product or upload images.");
     }
@@ -209,7 +212,7 @@ await dispatch(editProduct({
 
 
   return (
-    <Loading loading={loading} error={error} classStyle={"h-[500px]"} className={""} >
+    <Loading loading={loading || loading2} error={error} classStyle={"h-[500px]"} className={""} >
     <div>
       <h2>Edit Product</h2>
       <form

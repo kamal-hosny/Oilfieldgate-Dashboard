@@ -11,7 +11,7 @@ import { updateStatusUserOrder } from "../../store/usersOrder/act/actUpdateStatu
 const getStatusColor = (status) => {
   switch (status) {
     case null:
-      return "#1daa61";
+      return "#2770f7";
     case "viewed":
       return "#9ca3af";
     case "processing":

@@ -68,7 +68,7 @@ const Products = () => {
           <div className="flex gap-2 flex-row-reverse">
             <Link to="create">
               <Button className="bg-mainColor hover:bg-mainColorHover transition rounded-md text-white">
-                Add product
+                Create product
               </Button>
             </Link>
             <XlsxProducts productData={productData} />
@@ -94,7 +94,7 @@ const Products = () => {
           <option value="99999">All</option>
         </select>
       </div>
-      <DataTable productData={productData} />
+      <DataTable productData={productData} meta={meta} currentPage={pageNumber} limit={limit} />
     </div>
     </div>
   );

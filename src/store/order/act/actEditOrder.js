@@ -7,22 +7,20 @@ export const editOrder = createAsyncThunk(
   "orders/editOrder",
   async (data, thunkApi) => {
     
-    // 
     let token;
-    const authCookie = Cookies.get('auth')
+    const authCookie = Cookies.get('auth');
 
-    if (auth) {
+    if (authCookie) { // Fixed the condition to check authCookie
       try {
         token = JSON.parse(authCookie).token;
       } catch (error) {
         console.error("Error parsing auth cookie:", error);
         return thunkApi.rejectWithValue("Invalid auth cookie");
       }
-    }else {
+    } else {
       console.error("Auth cookie is not available.");
       return thunkApi.rejectWithValue("Authentication token is missing or invalid");
     }
-
 
     try {
       const response = await axiosConfig.put(`order/data/${data._id}`, data, {

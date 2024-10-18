@@ -22,7 +22,7 @@ const DeleteProduct = () => {
       .then(() => {
         toast.success("Product deleted successfully!");
         // Fetch updated product list after deletion
-        dispatch(getAllProducts());
+        dispatch(getAllProducts({ page: 1, limit: 10 }))
       })
       .catch((error) => {
         console.error("Error deleting product:", error);

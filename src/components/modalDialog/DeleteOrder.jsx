@@ -5,15 +5,15 @@ import { deleteOrder } from '../../store/order/act/actDeleteOrder';
 import { getUserOrders } from '../../store/usersOrder/act/actGetUserOrders';
 import { toast } from 'react-toastify';
 import { deleteOrderUserOrder } from '../../store/usersOrder/act/actDeleteOrderUserOrder';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import these hooks
+import { useNavigate, useLocation, useParams } from 'react-router-dom'; // Import these hooks
 
 const DeleteOrder = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigate
   const location = useLocation(); // Get current location
   const order = useSelector((state) => state?.modal?.product);
+  const {id} = useParams()
 
-  console.log(order);
 
   const confirmLog = useCallback(
     (e) => {
@@ -26,7 +26,7 @@ const DeleteOrder = () => {
         .unwrap()
         .then(() => {
           if (order?._id) {
-            dispatch(getUserOrders(order?._id));
+            dispatch(getUserOrders(id));
           }
           toast.success('Order deleted successfully!');
           // Check if you're on the specific order-details route
