@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { closeModal } from "../../store/modal/modalSlice";
-import { createOrder } from "../../store/order/act/actCreateOrder"; 
+import { createOrder } from "../../store/order/act/actCreateOrder";
 import { getOneOrder } from "../../store/order/act/actGetOneOrder";
 import { useParams } from "react-router-dom";
 import { getUserOrders } from "../../store/usersOrder/act/actGetUserOrders";
@@ -20,10 +20,10 @@ const CreateNewRequest = () => {
     } = useForm();
 
     const onSubmit = (formData) => {
-        if (!formData.Customer_PO || !formData.OG_Invoice) {
-            toast.error("Required fields are missing.");
-            return;
-        }
+        // if (!formData.Customer_PO || !formData.OG_Invoice) {
+        //     toast.error("Required fields are missing.");
+        //     return;
+        // }
 
         dispatch(
             createOrder({
@@ -78,6 +78,7 @@ const CreateNewRequest = () => {
                             <option value="">Select Status</option>
                             <option value="quoted">Quoted</option>
                             <option value="sent">Sent</option>
+                            <option value="in-progress">In Progress</option>
                             <option value="approved">Approved</option>
                             <option value="on-hold">On Hold</option>
                             <option value="rejected">Rejected</option>

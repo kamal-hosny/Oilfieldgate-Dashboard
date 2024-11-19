@@ -17,6 +17,7 @@ import AddProduct from "../components/modalDialog/AddProduct";
 import CreateUserOrderModal from "../components/modalDialog/CreateUserOrderModal";
 import CreateNewRequest from "../components/modalDialog/CreateNewRequest";
 import UserOrderChangeStatus from "../components/modalDialog/UserOrderChangeStatus";
+import ConfirmedOrder from "../components/modalDialog/ConfirmedOrder";
 
 
 const ModalManager = () => {
@@ -40,6 +41,7 @@ const ModalManager = () => {
     CreateUserOrderModal,
     CreateNewRequest,
     UserOrderChangeStatus,
+    ConfirmedOrder
  
   };
   let renderComponent;

@@ -42,7 +42,7 @@ const InformationHeader = ({ userData, allUserOrders }) => {
         <ReactTooltip id="create-request" place="top" effect="solid" />
         <Button
                   data-tooltip-id="user-data-tooltip"
-                  data-tooltip-content="User Data"
+                  data-tooltip-content="Customer Details"
           onClick={() => dispatch(openModal("UserDetails"))}
           className="bg-mainColor hover:bg-mainColorHover rounded-lg p-2"
         >

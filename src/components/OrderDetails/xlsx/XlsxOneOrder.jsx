@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { Button } from '@material-tailwind/react';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ExcelJS from 'exceljs';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
@@ -75,7 +75,7 @@ const XlsxOneOrder = ({ orderData }) => {
       const userValues = [
         userData.Email,
         userData.companyName,
-        userData.contactName + " " + userData.lastName ,
+        userData.contactName + " " + userData.lastName,
         userData.country,
         userData.phoneNumber,
       ];
@@ -89,19 +89,24 @@ const XlsxOneOrder = ({ orderData }) => {
 
       // Add order data fields horizontally
       const orderFields = [
-        'Order ID', 'Customer', 'Status', 'OG Invoice', 'Payment AED', 
-        'Payment Date', 'Shipping Status',
+        'RFQ #', 'RFQ Date', 'Customer', 'Status', 'OG Invoice#', 'Customer PO', 'Payment Date', 'Payment AED',
+        'Payment Reference', 'Shipping Status', 'DN#', 'Comments'
       ];
       const orderHeaderRow = worksheet.addRow(orderFields); // Add field names as headers
       applyHeaderStyle(orderHeaderRow); // Apply the header style with color #37474F
       const orderValues = [
         orderData._id,
+        new Date(orderData['RFQ Date']).toLocaleDateString(),
         orderData.Customer,
         orderData.Status,
         orderData['OG Invoice'],
+        orderData['Customer PO'],
+        orderData['Payment Date'],
         orderData['Payment AED'],
-        new Date(orderData['Payment Date']).toLocaleDateString(),
+        orderData['Payment Reference'],
         orderData['Shipping status'],
+        orderData['DN'],
+        orderData['Comments'],
       ];
       const valueRow = worksheet.addRow(orderValues); // Add order values in the next row
       applyRowStyle(valueRow); // Apply consistent row style
@@ -152,20 +157,20 @@ const XlsxOneOrder = ({ orderData }) => {
 
   return (
     <>
-    <Button
-      onClick={exportToExcel}
-      className="bg-green-600 rounded-md flex items-center gap-2 p-2 w-fit"
-      data-tooltip-id="export-excel-order-details"
-      data-tooltip-content="Export Excel"
-    >
-      <InsertDriveFileIcon />
-    </Button>
-    <ReactTooltip
-      id="export-excel-order-details"
-      place="top"
-      effect="solid"
-    />
-  </>
+      <Button
+        onClick={exportToExcel}
+        className="bg-green-600 rounded-md flex items-center gap-2 p-2 w-fit"
+        data-tooltip-id="export-excel-order-details"
+        data-tooltip-content="Export Excel"
+      >
+        <InsertDriveFileIcon />
+      </Button>
+      <ReactTooltip
+        id="export-excel-order-details"
+        place="top"
+        effect="solid"
+      />
+    </>
 
   );
 };

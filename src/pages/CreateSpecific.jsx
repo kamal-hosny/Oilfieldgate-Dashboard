@@ -30,7 +30,10 @@ const CardContent = React.memo(({ title, items }) => {
     (item) => () =>
       dispatch(openModal({ name: "DeleteSpecific", product: item, type: title })),
     [dispatch]
-  ); // wrap in a function to delay execution until click
+  );
+
+  // Define categories that should have restricted access
+  const restrictedCategories = ["Electrical", "Mechanical", "Instrumentation", "HSE Supplies"];
 
   return (
     <div className="card border-2 border-colorBorder  bg-sectionColor h-fit p-2 rounded-md flex flex-col gap-4">
@@ -41,27 +44,35 @@ const CardContent = React.memo(({ title, items }) => {
         </span>
       </div>
       <div className="flex flex-col gap-2">
-        {items.map((item, index) => (
-          <div className="flex justify-between text-colorText2" key={index}>
-            <p className="text-sm">{item.name}</p>
-            <div className="icons flex items-center gap-1">
-              <EditIcon
-                fontSize="small"
-                style={{ cursor: "pointer" }}
-                onClick={handleEdit(item)}
-              />
-              <DeleteOutlineIcon
-                fontSize="small"
-                onClick={handleDelete(item)} // Now correctly delayed until clicked
-                style={{ cursor: "pointer" }}
-              />
+        {items.map((item, index) => {
+          const isRestricted = restrictedCategories.includes(item.name);
+          return (
+            <div className="flex justify-between text-colorText2" key={index}>
+              <p className="text-sm">{item.name}</p>
+              <div className="icons flex items-center gap-1">
+                {!isRestricted && (
+                  <>
+                    <EditIcon
+                      fontSize="small"
+                      style={{ cursor: "pointer" }}
+                      onClick={handleEdit(item)}
+                    />
+                    <DeleteOutlineIcon
+                      fontSize="small"
+                      onClick={handleDelete(item)}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 });
+
 
 const CreateSpecific = () => {
   // Select necessary data from Redux store

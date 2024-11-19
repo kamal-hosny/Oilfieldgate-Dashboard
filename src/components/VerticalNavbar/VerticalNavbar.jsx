@@ -32,7 +32,7 @@ const VerticalNavbar = () => {
             path: "/checking-orders",
         },
         {
-            title: "Create User Order",
+            title: "Create Customer Order",
             icon: <GroupAddIcon fontSize="small" />,
             path: null,
             event: handleCreateUserOrderClick,

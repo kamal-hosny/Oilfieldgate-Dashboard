@@ -87,7 +87,7 @@ const CreateProducts = () => {
 
       const productData = {
         product_name: data.productName,
-        price: data.price,
+        price: Number(data.price),
         model_number: data.modelNumber,
         category: data.category,
         Dimension: data.dimension,
@@ -98,7 +98,7 @@ const CreateProducts = () => {
         size: data.size,
         HNS_code: data.HNSCode,
         material_Category: data.materialCategory,
-        instock: data.instock,
+        instock: Number(data.instock),
         Description: data.description,
         Currency: "AED",
 

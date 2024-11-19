@@ -4,12 +4,14 @@ import { createOrder } from "./act/actCreateOrder";
 import { deleteOrder } from "./act/actDeleteOrder";
 import { editOrder } from "./act/actEditOrder";
 import { getOneOrder } from "./act/actGetOneOrder";
+import { doneOrder } from "./act/actDoneOrder";
 
 const initialState = {
     records: [],
     loading: false,
     error: null,
     record: null,
+    doneRecord: ""
 }
 
 const getAllOrdersSlice = createSlice({
@@ -91,7 +93,23 @@ const getAllOrdersSlice = createSlice({
                 state.loading = false;
                 state.error = action.error;
             })
+            // doneOrder
+            .addCase(doneOrder.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(doneOrder.fulfilled, (state, action) => {
+                state.loading = false;
+                state.doneRecord = action.payload;
+            })
+            .addCase(doneOrder.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error;
+            })
+
     }
 })
+
+
 
 export default getAllOrdersSlice.reducer;

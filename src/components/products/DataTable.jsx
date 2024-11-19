@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // Router Dom
 import { useNavigate } from 'react-router-dom';
 // Redux
@@ -68,12 +68,12 @@ const DataTable = ({ productData , meta , currentPage, limit }) => {
                     <th scope="col" className="px-6 py-3 text-center">Condition</th>
                     <th scope="col" className="px-6 py-3 text-center">Categories</th>
                     <th scope="col" className="px-6 py-3 text-center">Availability</th>
-                    <th scope="col" className="px-6 py-3 text-center">Main Img</th>
+                    <th scope="col" className="px-6 py-3 text-center">Image</th>
                     <th scope="col" className="px-6 py-3 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-colorText2 text-colorText1">
-                  {Data?.map((product, index) => (
+                  {Data?.reverse().map((product, index) => (
                     <tr key={product._id} className="hover:bg-sectionColorHover">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">{index + startIndex}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">{product.HNSCode}</td>

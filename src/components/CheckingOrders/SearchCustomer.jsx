@@ -7,7 +7,7 @@ const SearchCustomer = ({ searchTerm, handleSearchChange }) => {
     <div className='flex items-center pb-4'>
         <input 
           type="search" 
-          placeholder='Search for request' 
+          placeholder='Search for Customer' 
           className="border-colorBorder rounded-s-md border-2 p-2 w-full focus:outline-mainColorHover text-sm"
           value={searchTerm} 
           onChange={handleSearchChange}

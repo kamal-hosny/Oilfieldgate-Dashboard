@@ -84,6 +84,8 @@ const OrderDetails = () => {
     }
   }, [dispatch, id, CloneOrderData, isDataChanged, fetchOneOrder]);
 
+  const isDone = OneOrderData?.done
+  console.log(isDone);
 
   return (
     <Loading classStyle="h-screen" className="" loading={LoadingOneOrderData} error={ErrorOneOrderData} >
@@ -98,7 +100,7 @@ const OrderDetails = () => {
           {CloneOrderData?.length > 0 ? (
             <div className='flex justify-between gap-2 lg:flex-row flex-col'>
               <span className='flex-[3]'>
-                <TableOrderCards orderData={CloneOrderData} />
+                <TableOrderCards orderData={CloneOrderData} isDone={isDone} />
               </span>
               <span className='flex-1'>
                 <PricingTable orderData={CloneOrderData || []} />
@@ -110,12 +112,17 @@ const OrderDetails = () => {
         </div>
       </div>
      <div className='flex gap-2'>
-     <Button onClick={fetchEditCart} className='w-fit' disabled={!isDataChanged}>
+      {!isDone && (
+        <>
+         <Button onClick={fetchEditCart} className='w-fit' disabled={!isDataChanged}>
         Save changes
       </Button>
       <Button  onClick={() => dispatch(openModal({name: "AddProduct"}))}>
         Add Product
       </Button>
+        </>
+      )}
+    
      </div>
     </div>
     </Loading>

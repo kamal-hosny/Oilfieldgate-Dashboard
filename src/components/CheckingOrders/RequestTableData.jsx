@@ -18,12 +18,15 @@ const TABLE_HEAD = [
   "Shipping status",
   "DN#",
   "Comments",
+  "PO Status",
   "",
 ];
 
 const RequestTableData = ({ allUserOrders }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  console.log(allUserOrders);
 
   return (
     <table className="w-full overflow-hidden text-center">
@@ -46,7 +49,7 @@ const RequestTableData = ({ allUserOrders }) => {
         </tr>
       </thead>
       <tbody className="!text-sm">
-        {allUserOrders?.map((order) => (
+        {allUserOrders?.slice().reverse().map((order) => (
           <tr key={order._id}>
             <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order._id || "_"}
@@ -83,6 +86,9 @@ const RequestTableData = ({ allUserOrders }) => {
             </td>
             <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
               {order.Comments || "_"}
+            </td>
+            <td className="px-3 py-2 border-b border-blue-gray-50 whitespace-nowrap">
+              {order?.done ? "Confirmed" : "Not Confirmed"}
             </td>
             <td className="px-3 py-2 flex items-center gap-3 justify-center">
               <button
